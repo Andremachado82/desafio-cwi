@@ -1,4 +1,4 @@
-package com.desafio.cwi.services;
+package com.desafio.cwi.services.pauta;
 
 import java.util.List;
 

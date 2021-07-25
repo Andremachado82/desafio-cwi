@@ -1,4 +1,4 @@
-package com.desafio.cwi.services;
+package com.desafio.cwi.services.pauta;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

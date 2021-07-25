@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.desafio.cwi.models.Voto;
-import com.desafio.cwi.services.VotoCreateService;
+import com.desafio.cwi.services.voto.VotoCreateService;
 
 @RestController
 @RequestMapping("/v1/voto")

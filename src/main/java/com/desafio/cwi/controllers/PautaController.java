@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.desafio.cwi.models.Pauta;
-import com.desafio.cwi.services.PautaCreateService;
-import com.desafio.cwi.services.PautaDeleteService;
-import com.desafio.cwi.services.PautaGetAllService;
-import com.desafio.cwi.services.PautaGetByIdService;
-import com.desafio.cwi.services.PautaUpdateService;
+import com.desafio.cwi.services.pauta.PautaCreateService;
+import com.desafio.cwi.services.pauta.PautaDeleteService;
+import com.desafio.cwi.services.pauta.PautaGetAllService;
+import com.desafio.cwi.services.pauta.PautaGetByIdService;
+import com.desafio.cwi.services.pauta.PautaUpdateService;
 
 @RestController
 @RequestMapping("/v1/pauta")

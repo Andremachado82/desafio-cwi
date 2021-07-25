@@ -1,5 +1,6 @@
-package com.desafio.cwi.services;
+package com.desafio.cwi.services.pauta;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -7,14 +8,17 @@ import com.desafio.cwi.models.Pauta;
 import com.desafio.cwi.repositories.PautaRepository;
 
 @Service
-public class PautaGetByIdService {
+public class PautaUpdateService {
 	
 	@Autowired
 	private PautaRepository pautaRepository;
 	
-	public Pauta getById(Long id) throws Exception {
+	public Pauta update(Long id, Pauta pauta) throws Exception {
+		Pauta pautaExists = findPautaById(id);
 		
-		return findPautaById(id);		
+		BeanUtils.copyProperties(pauta, pautaExists, "id");			
+		
+		return pautaRepository.save(pauta);		
 	}
 	
 	public Pauta findPautaById(Long id) throws Exception {
