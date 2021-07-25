@@ -28,7 +28,7 @@ public class Voto implements Serializable {
 	
 	private Boolean escolha;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Pauta pauta;
 
 }
