@@ -20,6 +20,7 @@ import com.desafio.cwi.models.Pauta;
 import com.desafio.cwi.services.PautaCreateService;
 import com.desafio.cwi.services.PautaDeleteService;
 import com.desafio.cwi.services.PautaGetAllService;
+import com.desafio.cwi.services.PautaGetByIdService;
 import com.desafio.cwi.services.PautaUpdateService;
 
 @RestController
@@ -31,6 +32,9 @@ public class PautaController {
 	
 	@Autowired
 	private PautaGetAllService pautaGetAllService;
+	
+	@Autowired
+	PautaGetByIdService pautaGetByIdService;
 	
 	@Autowired
 	private PautaUpdateService pautaUpdateService;
@@ -48,6 +52,12 @@ public class PautaController {
 	public ResponseEntity<List<Pauta>> getAllPauta() {
 		
 		return ResponseEntity.ok(pautaGetAllService.getAllPauta());
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<Pauta> getByIdPauta(@PathVariable Long id) throws Exception {
+		
+		return ResponseEntity.ok(pautaGetByIdService.getById(id));
 	}
 	
 
