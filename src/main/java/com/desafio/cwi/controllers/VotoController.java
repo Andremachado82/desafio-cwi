@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import com.desafio.cwi.models.Voto;
 import com.desafio.cwi.services.voto.VotoCreateService;
 import com.desafio.cwi.services.voto.VotoFindAllService;
 import com.desafio.cwi.services.voto.VotoFindByIdService;
+import com.desafio.cwi.services.voto.votoDeleteByIdService;
 
 @RestController
 @RequestMapping("/v1/voto")
@@ -28,6 +30,9 @@ public class VotoController {
 	
 	@Autowired
 	VotoFindByIdService votoFindByIdService;
+	
+	@Autowired
+	votoDeleteByIdService votoDeleteByIdService;
 
 	@PostMapping
 	public Voto create(@RequestBody Voto voto) {
@@ -42,5 +47,10 @@ public class VotoController {
 	@GetMapping("/{id}")
 	public Voto findById(@PathVariable Long id) throws Exception {
 		return votoFindByIdService.findById(id);
+	} 
+	
+	@DeleteMapping("/{id}")
+	public void deleteById(@PathVariable Long id) throws Exception {
+		votoDeleteByIdService.deleteById(id);
 	} 
 }
