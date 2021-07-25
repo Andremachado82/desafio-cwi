@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.desafio.cwi.models.Voto;
 import com.desafio.cwi.services.voto.VotoCreateService;
 import com.desafio.cwi.services.voto.VotoFindAllService;
+import com.desafio.cwi.services.voto.VotoFindByIdService;
 
 @RestController
 @RequestMapping("/v1/voto")
@@ -23,6 +25,9 @@ public class VotoController {
 	
 	@Autowired
 	VotoFindAllService votoFindAllService;
+	
+	@Autowired
+	VotoFindByIdService votoFindByIdService;
 
 	@PostMapping
 	public Voto create(@RequestBody Voto voto) {
@@ -32,5 +37,10 @@ public class VotoController {
 	@GetMapping("/list")
 	public ResponseEntity<List<Voto>> findAll() {
 		return ResponseEntity.ok(votoFindAllService.findAll());
+	} 
+	
+	@GetMapping("/{id}")
+	public Voto findById(@PathVariable Long id) throws Exception {
+		return votoFindByIdService.findById(id);
 	} 
 }
