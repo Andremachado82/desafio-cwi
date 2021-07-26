@@ -24,7 +24,6 @@ import com.desafio.cwi.services.pauta.PautaGetByIdService;
 import com.desafio.cwi.services.pauta.PautaUpdateService;
 
 @RestController
-@RequestMapping("/v1/pauta")
 public class PautaController {
 	
 	@Autowired
@@ -42,32 +41,32 @@ public class PautaController {
 	@Autowired
 	PautaDeleteService pautaDeleteService;
 	
-	@PostMapping
+	@PostMapping("/v1/pautas")
 	public ResponseEntity<Pauta> create(@RequestBody Pauta pauta) {
 		
 		return ResponseEntity.ok().body(pautaCreateService.create(pauta));
 	}
 	
-	@GetMapping("/list")
+	@GetMapping("/v1/pautas")
 	public ResponseEntity<List<Pauta>> getAllPauta() {
 		
 		return ResponseEntity.ok(pautaGetAllService.getAllPauta());
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/v1/pautas/{id}")
 	public ResponseEntity<Pauta> getByIdPauta(@PathVariable Long id) throws Exception {
 		
 		return ResponseEntity.ok(pautaGetByIdService.getById(id));
 	}
 	
 
-	@PutMapping("/{id}")
+	@PutMapping("/v1/pautas/{id}")
 	public ResponseEntity<Pauta> update(@Valid @PathVariable("id") Long id, @RequestBody Pauta pauta) throws Exception {
 		
 		return ResponseEntity.ok().body(pautaUpdateService.update(id, pauta));
 	}
 	
-	@DeleteMapping("{id}")
+	@DeleteMapping("/v1/pautas/{id}")
 	public void deleteById(@PathVariable Long id) throws Exception {
 		pautaDeleteService.deleteById(id);
 	}
