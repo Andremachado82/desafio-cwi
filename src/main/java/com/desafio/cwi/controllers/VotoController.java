@@ -3,6 +3,7 @@ package com.desafio.cwi.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.desafio.cwi.models.Voto;
@@ -34,21 +36,25 @@ public class VotoController {
 	votoDeleteByIdService votoDeleteByIdService;
 
 	@PostMapping("/v1/pautas/{id}/sessoes/{id}/votos")
+	@ResponseStatus(code = HttpStatus.CREATED)
 	public Voto create(@RequestBody Voto voto) {
 		return votoCreateService.create(voto);
 	} 
 	
 	@GetMapping("/v1/pautas/sessoes/votos")
-	public ResponseEntity<List<Voto>> findAll() {
-		return ResponseEntity.ok(votoFindAllService.findAll());
+	@ResponseStatus(code = HttpStatus.OK)
+	public List<Voto> findAll() {
+		return votoFindAllService.findAll();
 	} 
 	
 	@GetMapping("v1/pautas/sessoes/votos/{id}")
+	@ResponseStatus(code = HttpStatus.OK)
 	public Voto findById(@PathVariable Long id) throws Exception {
 		return votoFindByIdService.findById(id);
 	} 
 	
 	@DeleteMapping("v1/pautas/sessoes/votos/{id}")
+	@ResponseStatus(code = HttpStatus.OK)
 	public void deleteById(@PathVariable Long id) throws Exception {
 		votoDeleteByIdService.deleteById(id);
 	} 
