@@ -19,7 +19,6 @@ import com.desafio.cwi.services.voto.VotoFindByIdService;
 import com.desafio.cwi.services.voto.votoDeleteByIdService;
 
 @RestController
-@RequestMapping("/v1/voto")
 public class VotoController {
 	
 	@Autowired
@@ -34,22 +33,22 @@ public class VotoController {
 	@Autowired
 	votoDeleteByIdService votoDeleteByIdService;
 
-	@PostMapping
+	@PostMapping("/v1/pautas/{id}/sessoes/{id}/votos")
 	public Voto create(@RequestBody Voto voto) {
 		return votoCreateService.create(voto);
 	} 
 	
-	@GetMapping("/list")
+	@GetMapping("/v1/pautas/sessoes/votos")
 	public ResponseEntity<List<Voto>> findAll() {
 		return ResponseEntity.ok(votoFindAllService.findAll());
 	} 
 	
-	@GetMapping("/{id}")
+	@GetMapping("v1/pautas/sessoes/votos/{id}")
 	public Voto findById(@PathVariable Long id) throws Exception {
 		return votoFindByIdService.findById(id);
 	} 
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("v1/pautas/sessoes/votos/{id}")
 	public void deleteById(@PathVariable Long id) throws Exception {
 		votoDeleteByIdService.deleteById(id);
 	} 
