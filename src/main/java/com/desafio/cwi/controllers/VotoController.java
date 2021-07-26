@@ -35,9 +35,9 @@ public class VotoController {
 	@Autowired
 	votoDeleteByIdService votoDeleteByIdService;
 
-	@PostMapping("/v1/pautas/{id}/sessoes/{id}/votos")
+	@PostMapping("/v1/pautas/{idPauta}/sessoes/{idSessao}/votos")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public Voto create(@RequestBody Voto voto) {
+	public Voto create(@PathVariable Long idPauta, @PathVariable Long idSessao, @RequestBody Voto voto) {
 		return votoCreateService.create(voto);
 	} 
 	

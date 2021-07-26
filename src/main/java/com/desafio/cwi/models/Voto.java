@@ -8,8 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,6 +20,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Voto implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -24,10 +28,13 @@ public class Voto implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotBlank(message = "CPF obrigatório")
 	private String cpf;
 	
+	@NotNull(message = "Escolha de voto obrigatória")
 	private Boolean escolha;
 	
+	@NotNull(message = "Pauta obrigatória")
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Pauta pauta;
 
