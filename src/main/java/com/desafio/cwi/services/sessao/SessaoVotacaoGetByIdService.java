@@ -1,5 +1,7 @@
 package com.desafio.cwi.services.sessao;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,15 @@ public class SessaoVotacaoGetByIdService {
 		SessaoVotacao sessao = sessaoVotacaoRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
 				"Sessão não encontrado com o ID: " + id + ", Tipo: " + SessaoVotacao.class.getName()));
 		return sessao;
+	}
+	
+	public SessaoVotacao findByIdAndPautaId(Long idSessao, Long idPauta) {
+		Optional<SessaoVotacao> sessao = sessaoVotacaoRepository.findByIdAndPautaId(idSessao, idPauta);		
+		if (!sessao.isPresent()) {
+			throw new ObjectNotFoundException("Sessão não encontrado com o ID:" + idSessao + ", Tipo: " + SessaoVotacao.class.getName());
+		}
+		
+		return sessao.get();
 	}
 	
 

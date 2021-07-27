@@ -10,5 +10,6 @@ import com.desafio.cwi.models.SessaoVotacao;
 public interface SessaoVotacaoRepository extends JpaRepository<SessaoVotacao, Long>{
 	
 	Optional<List<SessaoVotacao>> findByPautaId(Long id);
-
+	
+	  Optional<SessaoVotacao> findByIdAndPautaId(Long idSessao, Long idPauta);
 }

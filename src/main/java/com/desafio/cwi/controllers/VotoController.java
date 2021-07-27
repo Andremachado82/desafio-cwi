@@ -36,7 +36,7 @@ public class VotoController {
 	@PostMapping("/v1/pautas/{idPauta}/sessoes/{idSessao}/votos")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public Voto create(@PathVariable Long idPauta, @PathVariable Long idSessao, @RequestBody Voto voto) {
-		return votoCreateService.create(voto);
+		return votoCreateService.create(idPauta, idSessao, voto);
 	} 
 	
 	@GetMapping("/v1/pautas/sessoes/votos")
