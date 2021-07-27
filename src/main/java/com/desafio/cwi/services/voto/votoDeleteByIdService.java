@@ -1,5 +1,8 @@
 package com.desafio.cwi.services.voto;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +24,11 @@ public class votoDeleteByIdService {
 	public Voto findVotoById(Long id) {
 		return votoRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
 				"Voto não encontrado com o ID: " + id + ", Tipo: " + Voto.class.getName()));
+	}
+
+	public void deleteVotoByPautaId(Long id) {
+		Optional<List<Voto>> listVotos = votoRepository.findByPautaId(id);
+		listVotos.ifPresent(voto -> voto.forEach(votoRepository::delete));
 	}
 
 }
