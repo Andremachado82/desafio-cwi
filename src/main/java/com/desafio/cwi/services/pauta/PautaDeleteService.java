@@ -32,7 +32,7 @@ public class PautaDeleteService {
 	
 	public Pauta findPautaById(Long id) {
 		return pautaRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException (
-				"Pauta de ID: " + id + ", Tipo: " + Pauta.class.getName()));
+				"Pauta não encontrada com o ID: " + id + ", Tipo: " + Pauta.class.getName()));
 	}
 
 }

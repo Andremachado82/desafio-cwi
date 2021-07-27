@@ -38,7 +38,7 @@ public class SessaoVotacaoController {
 	@PostMapping("/v1/pauta/{idPauta}/sessao")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public SessaoVotacao create(@PathVariable Long idPauta, @RequestBody @Valid SessaoVotacao sessao) {
-		return sessaoVotacaoCreateService.create(sessao);
+		return sessaoVotacaoCreateService.create(idPauta, sessao);
 	}
 	
 	@GetMapping("/v1/pauta/sessao")
