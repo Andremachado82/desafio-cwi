@@ -9,13 +9,13 @@ public class StandardError {
 
 	private String msg;
 
-	private Long timeStamp;
+	private String dataExcecao;
 
-	public StandardError(Integer status, String msg, Long timeStamp) {
+	public StandardError(Integer status, String msg, String dataExcecao) {
 		super();
 		this.status = status;
 		this.msg = msg;
-		this.timeStamp = timeStamp;
+		this.dataExcecao = dataExcecao;
 	}
 
 }
