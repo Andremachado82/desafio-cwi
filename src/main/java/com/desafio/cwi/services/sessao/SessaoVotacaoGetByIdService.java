@@ -35,6 +35,4 @@ public class SessaoVotacaoGetByIdService {
 		
 		return sessao.get();
 	}
-	
-
 }
