@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,13 +30,13 @@ public class Voto implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank(message = "CPF obrigatório")
+	@NotBlank
+	@CPF(message = "CPF inválido")
 	private String cpf;
 	
 	@NotNull(message = "Escolha de voto obrigatória")
 	private Boolean escolha;
 	
-	@NotNull(message = "Pauta obrigatória")
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Pauta pauta;
 

@@ -11,5 +11,4 @@ public class DesafioCwiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DesafioCwiApplication.class, args);
 	}
-
 }

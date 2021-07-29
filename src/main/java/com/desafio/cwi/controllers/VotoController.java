@@ -2,6 +2,8 @@ package com.desafio.cwi.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,7 +37,7 @@ public class VotoController {
 
 	@PostMapping("/v1/pautas/{idPauta}/sessoes/{idSessao}/votos")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public Voto create(@PathVariable Long idPauta, @PathVariable Long idSessao, @RequestBody Voto voto) {
+	public Voto create(@PathVariable Long idPauta, @PathVariable Long idSessao, @RequestBody @Valid Voto voto) {
 		return votoCreateService.create(idPauta, idSessao, voto);
 	} 
 	

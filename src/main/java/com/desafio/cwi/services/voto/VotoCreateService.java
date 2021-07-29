@@ -17,6 +17,8 @@ import com.desafio.cwi.services.sessao.SessaoVotacaoGetByIdService;
 @Service
 public class VotoCreateService {
 
+	private final String CPF_UNABLE_TO_VOTE = "UNABLE_TO_VOTE";
+	
 	@Autowired
 	private VotoRepository votoRepository;
 
@@ -25,6 +27,7 @@ public class VotoCreateService {
 	
 	@Autowired
 	CpfValidationClient cpfValidationClient;	
+	
 
 	public Voto create(Long idPauta, Long idSessao, Voto voto) {
 		SessaoVotacao sessao = sessaoVotacaoGetByIdService.findByIdAndPautaId(idSessao, idPauta);
@@ -52,17 +55,15 @@ public class VotoCreateService {
 	}
 	
 	protected void cpfAbleToVote(final Voto voto) {
-		try {
-			CpfValidationResponse cpfResponse = cpfValidationClient.getCpf(voto.getCpf());
-			if (cpfResponse != null) {
-				voto.setCpf(cpfResponse.getStatus());
-			} else {
-				throw new ObjectNotFoundException("O CPF informado não encontrado");
-			}
-		} catch (Exception e) {
-			throw new ObjectNotFoundException("O CPF informado não é válido");
-		}
-		
+		String cpfFormatado = formataCpf(voto.getCpf());
+		CpfValidationResponse cpfResponse = cpfValidationClient.getCpf(cpfFormatado);
+		if (cpfResponse.getStatus().equals(CPF_UNABLE_TO_VOTE)) {
+			throw new ObjectNotFoundException("CPF inválido para votação");
+		} 
+	}
+
+	private String formataCpf(String cpf) {
+		return cpf.replaceAll("[^0-9]+", "");
 	}
 
 	public List<Voto> findAll() {
