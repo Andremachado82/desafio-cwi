@@ -11,4 +11,6 @@ public interface VotoRepository extends JpaRepository<Voto, Long>{
 	
 	Optional<List<Voto>>findByPautaId(Long id);
 
+	Optional<Voto> findByCpfAndPautaId(String cpf, Long idPauta);
+
 }

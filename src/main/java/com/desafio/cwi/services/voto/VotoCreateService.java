@@ -2,6 +2,7 @@ package com.desafio.cwi.services.voto;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,8 +53,18 @@ public class VotoCreateService {
 		}
 
 		cpfAbleToVote(voto);
+		verificaCpfExsiteNaPauta(voto);
 	}
 	
+	private void verificaCpfExsiteNaPauta(Voto voto) {
+		Optional<Voto> votoExistente = votoRepository.findByCpfAndPautaId(voto.getCpf(), voto.getPauta().getId());
+
+		if (votoExistente.isPresent()) {
+			throw new ObjectNotFoundException("Já existe um voto registrado nesta Pauta de nº " + voto.getPauta().getId() + " com o CPF " + voto.getCpf());
+		}
+		
+	}
+
 	protected void cpfAbleToVote(final Voto voto) {
 		String cpfFormatado = formataCpf(voto.getCpf());
 		CpfValidationResponse cpfResponse = cpfValidationClient.getCpf(cpfFormatado);
