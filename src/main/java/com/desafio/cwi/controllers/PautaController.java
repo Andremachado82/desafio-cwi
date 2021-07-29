@@ -20,7 +20,11 @@ import com.desafio.cwi.services.pauta.PautaDeleteService;
 import com.desafio.cwi.services.pauta.PautaGetAllService;
 import com.desafio.cwi.services.pauta.PautaGetByIdService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
+@Api(value="API REST Pauta controller")
 public class PautaController {
 	
 	@Autowired
@@ -36,6 +40,7 @@ public class PautaController {
 	PautaDeleteService pautaDeleteService;
 	
 	@PostMapping("/v1/pautas")
+	@ApiOperation(value="Cria uma pauta")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public Pauta create(@RequestBody @Valid Pauta pauta) {
 		
@@ -43,6 +48,7 @@ public class PautaController {
 	}
 	
 	@GetMapping("/v1/pautas")
+	@ApiOperation(value="Retorna uma lista de pautas")
 	@ResponseStatus(code = HttpStatus.OK)
 	public List<Pauta> getAllPauta() {
 		
@@ -50,6 +56,7 @@ public class PautaController {
 	}
 	
 	@GetMapping("/v1/pautas/{id}")
+	@ApiOperation(value="Retorna uma pauta por ID")
 	@ResponseStatus(code = HttpStatus.OK)	
 	public Pauta getByIdPauta(@PathVariable Long id) throws Exception {
 		
@@ -57,6 +64,7 @@ public class PautaController {
 	}
 	
 	@DeleteMapping("/v1/pautas/{id}")
+	@ApiOperation(value="Deleta uma pauta")
 	@ResponseStatus(code = HttpStatus.OK)
 	public void deleteById(@PathVariable Long id) throws Exception {
 		pautaDeleteService.deleteById(id);

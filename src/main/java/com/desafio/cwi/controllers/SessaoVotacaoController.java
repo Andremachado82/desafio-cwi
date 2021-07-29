@@ -20,7 +20,11 @@ import com.desafio.cwi.services.sessao.SessaoVotacaoDeleteService;
 import com.desafio.cwi.services.sessao.SessaoVotacaoFindAllService;
 import com.desafio.cwi.services.sessao.SessaoVotacaoGetByIdService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
+@Api(value="API REST Sessão controller")
 public class SessaoVotacaoController {
 	
 	@Autowired
@@ -36,24 +40,28 @@ public class SessaoVotacaoController {
 	SessaoVotacaoDeleteService sessaoVotacaoDeleteService;
 	
 	@PostMapping("/v1/pauta/{idPauta}/sessao")
+	@ApiOperation(value="Cria uma sessão em uma Pauta")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public SessaoVotacao create(@PathVariable Long idPauta, @RequestBody @Valid SessaoVotacao sessao) {
 		return sessaoVotacaoCreateService.create(idPauta, sessao);
 	}
 	
 	@GetMapping("/v1/pauta/sessao")
+	@ApiOperation(value="Retorna uma lista de Sessões")
 	@ResponseStatus(code = HttpStatus.OK)
 	public List<SessaoVotacao> findAll() {
 		return sessaoVotacaoFindAllService.findAll();
 	} 
 	
 	@GetMapping("/v1/pauta/sessao/{id}")
+	@ApiOperation(value="Retorna uma sessão por ID")
 	@ResponseStatus(code = HttpStatus.OK)
 	public SessaoVotacao findById(@PathVariable Long id) throws Exception {
 		return sessaoVotacaoGetByIdService.findById(id);
 	}
 	
 	@DeleteMapping("/v1/pauta/sessao/{id}")
+	@ApiOperation(value="Deleta uma sessão")
 	@ResponseStatus(code = HttpStatus.OK)
 	public void deleteById(@PathVariable Long id) throws Exception {
 		sessaoVotacaoDeleteService.deleteById(id);
