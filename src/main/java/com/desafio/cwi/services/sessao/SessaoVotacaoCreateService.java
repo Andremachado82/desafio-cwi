@@ -21,6 +21,9 @@ public class SessaoVotacaoCreateService {
 	PautaRepository pautaRepository;
 	
 	public SessaoVotacao create(Long idPauta, SessaoVotacao sessao) {
+		if (sessao.getDataHoraInicio() == null ) {
+			throw new ObjectNotFoundException("Data não pode ser nula");
+		}
 		Optional<Pauta> pauta = pautaRepository.findById(idPauta);
 		if (!pauta.isPresent()) {
 			throw new ObjectNotFoundException("Pauta não encontrada com ID: " + idPauta + ", Tipo: " + Pauta.class.getName());
@@ -28,6 +31,4 @@ public class SessaoVotacaoCreateService {
 		sessao.setPauta(pauta.get());
 		return sessaoVotacaoRepository.save(sessao);
 	}
-	
-
 }

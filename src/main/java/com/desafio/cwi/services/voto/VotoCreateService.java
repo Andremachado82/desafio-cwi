@@ -47,6 +47,9 @@ public class VotoCreateService {
 
 	protected void verificaVoto(final SessaoVotacao sessao, final Voto voto) {
 
+		if (voto.getEscolha() == null) {
+			throw new ObjectNotFoundException("Escolha do voto não pode ser nula");
+		}
 		LocalDateTime dataLimite = sessao.getDataHoraInicio().plusMinutes(sessao.getTempoSessao());
 		if (LocalDateTime.now().isAfter(dataLimite)) {
 			throw new ObjectNotFoundException("Sessão expirada");
