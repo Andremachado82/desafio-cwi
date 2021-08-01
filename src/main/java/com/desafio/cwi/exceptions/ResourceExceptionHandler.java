@@ -10,13 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.desafio.cwi.services.exceptions.ObjectNotFoundException;
+import com.desafio.cwi.services.exceptions.ApiGenericException;
 
 @ControllerAdvice
 public class ResourceExceptionHandler {
 	
-	@ExceptionHandler(ObjectNotFoundException.class)
-	public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException e, HttpServletRequest request) {
+	@ExceptionHandler(ApiGenericException.class)
+	public ResponseEntity<StandardError> objectNotFound(ApiGenericException e, HttpServletRequest request) {
 		Timestamp stamp = new Timestamp(System.currentTimeMillis());
 		String dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(stamp);
 		

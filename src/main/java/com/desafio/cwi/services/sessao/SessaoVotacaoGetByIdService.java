@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.desafio.cwi.models.SessaoVotacao;
 import com.desafio.cwi.repositories.SessaoVotacaoRepository;
-import com.desafio.cwi.services.exceptions.ObjectNotFoundException;
+import com.desafio.cwi.services.exceptions.ApiGenericException;
 
 @Service
 public class SessaoVotacaoGetByIdService {
@@ -22,7 +22,7 @@ public class SessaoVotacaoGetByIdService {
 	}
 	
 	public SessaoVotacao findSessaoById(Long id) {
-		SessaoVotacao sessao = sessaoVotacaoRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
+		SessaoVotacao sessao = sessaoVotacaoRepository.findById(id).orElseThrow(() -> new ApiGenericException(
 				"Sessão não encontrado com o ID: " + id + ", Tipo: " + SessaoVotacao.class.getName()));
 		return sessao;
 	}
@@ -30,7 +30,7 @@ public class SessaoVotacaoGetByIdService {
 	public SessaoVotacao findByIdAndPautaId(Long idSessao, Long idPauta) {
 		Optional<SessaoVotacao> sessao = sessaoVotacaoRepository.findByIdAndPautaId(idSessao, idPauta);		
 		if (!sessao.isPresent()) {
-			throw new ObjectNotFoundException("Sessão não encontrado com o ID:" + idSessao + ", Tipo: " + SessaoVotacao.class.getName());
+			throw new ApiGenericException("Sessão não encontrado com o ID:" + idSessao + ", Tipo: " + SessaoVotacao.class.getName());
 		}
 		
 		return sessao.get();

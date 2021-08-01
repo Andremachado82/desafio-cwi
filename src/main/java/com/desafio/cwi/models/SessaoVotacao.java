@@ -33,5 +33,4 @@ public class SessaoVotacao implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Pauta pauta;
-
 }

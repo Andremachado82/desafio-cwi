@@ -18,6 +18,4 @@ public class SessaoVotacaoFindAllService {
 		List<SessaoVotacao> listSessao = sessaoVotacaoRepository.findAll();
 		return listSessao;
 	}
-	
-
 }

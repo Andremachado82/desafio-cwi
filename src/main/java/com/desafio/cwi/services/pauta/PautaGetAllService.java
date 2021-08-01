@@ -19,5 +19,4 @@ public class PautaGetAllService {
 		
 		return listPauta;
 	}
-
 }

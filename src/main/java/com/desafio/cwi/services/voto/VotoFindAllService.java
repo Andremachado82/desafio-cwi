@@ -18,8 +18,5 @@ public class VotoFindAllService {
 		List<Voto> listVoto = votoRepository.findAll();
 		
 		return listVoto;
-		
 	}
-	
-
 }

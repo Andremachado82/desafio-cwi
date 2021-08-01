@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.desafio.cwi.models.Pauta;
 import com.desafio.cwi.repositories.PautaRepository;
-import com.desafio.cwi.services.exceptions.ObjectNotFoundException;
+import com.desafio.cwi.services.exceptions.ApiGenericException;
 
 @Service
 public class PautaGetByIdService {
@@ -19,7 +19,7 @@ public class PautaGetByIdService {
 	}
 	
 	public Pauta findPautaById(Long id) {
-		Pauta pauta = pautaRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(
+		Pauta pauta = pautaRepository.findById(id).orElseThrow(() -> new ApiGenericException(
 				"Pauta não encontrada com ID: " + id + ", Tipo: " + Pauta.class.getName()));
 		return pauta;
 	}

@@ -17,5 +17,4 @@ public class StandardError {
 		this.msg = msg;
 		this.dataExcecao = dataExcecao;
 	}
-
 }

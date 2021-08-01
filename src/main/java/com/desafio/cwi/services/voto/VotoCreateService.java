@@ -12,7 +12,7 @@ import com.desafio.cwi.models.Voto;
 import com.desafio.cwi.recursos.CpfValidationClient;
 import com.desafio.cwi.recursos.CpfValidationResponse;
 import com.desafio.cwi.repositories.VotoRepository;
-import com.desafio.cwi.services.exceptions.ObjectNotFoundException;
+import com.desafio.cwi.services.exceptions.ApiGenericException;
 import com.desafio.cwi.services.sessao.SessaoVotacaoGetByIdService;
 
 @Service
@@ -33,14 +33,14 @@ public class VotoCreateService {
 	public Voto create(Long idPauta, Long idSessao, Voto voto) {
 		SessaoVotacao sessao = sessaoVotacaoGetByIdService.findByIdAndPautaId(idSessao, idPauta);
 		if (!idPauta.equals(sessao.getPauta().getId())) {
-			throw new ObjectNotFoundException("Sessão inválida");
+			throw new ApiGenericException("Sessão inválida");
 		}
 
 		voto.setPauta(sessao.getPauta());		
 		return verificaVotoAndSalva(sessao, voto);
 	}
 	
-	private Voto verificaVotoAndSalva(final SessaoVotacao sessao, final Voto voto) {
+	public Voto verificaVotoAndSalva(final SessaoVotacao sessao, final Voto voto) {
 		verificaVoto(sessao, voto);
 		return votoRepository.save(voto);
 	}
@@ -48,11 +48,11 @@ public class VotoCreateService {
 	protected void verificaVoto(final SessaoVotacao sessao, final Voto voto) {
 
 		if (voto.getEscolha() == null) {
-			throw new ObjectNotFoundException("Escolha do voto não pode ser nula");
+			throw new ApiGenericException("Escolha do voto não pode ser nula");
 		}
 		LocalDateTime dataLimite = sessao.getDataHoraInicio().plusMinutes(sessao.getTempoSessao());
 		if (LocalDateTime.now().isAfter(dataLimite)) {
-			throw new ObjectNotFoundException("Sessão expirada");
+			throw new ApiGenericException("Sessão expirada");
 		}
 
 		cpfAbleToVote(voto);
@@ -63,7 +63,7 @@ public class VotoCreateService {
 		Optional<Voto> votoExistente = votoRepository.findByCpfAndPautaId(voto.getCpf(), voto.getPauta().getId());
 
 		if (votoExistente.isPresent()) {
-			throw new ObjectNotFoundException("Já existe um voto registrado nesta Pauta de nº " + voto.getPauta().getId() + " com o CPF " + voto.getCpf());
+			throw new ApiGenericException("Já existe um voto registrado nesta Pauta de nº " + voto.getPauta().getId() + " com o CPF " + voto.getCpf());
 		}
 		
 	}
@@ -72,7 +72,7 @@ public class VotoCreateService {
 		String cpfFormatado = formataCpf(voto.getCpf());
 		CpfValidationResponse cpfResponse = cpfValidationClient.getCpf(cpfFormatado);
 		if (cpfResponse.getStatus().equals(CPF_UNABLE_TO_VOTE)) {
-			throw new ObjectNotFoundException("CPF inválido para votação");
+			throw new ApiGenericException("CPF inválido para votação");
 		} 
 	}
 

@@ -3,6 +3,7 @@ package com.desafio.cwi.services.pautaTestes;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.Random;
 
@@ -14,7 +15,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import com.desafio.cwi.models.Pauta;
 import com.desafio.cwi.repositories.PautaRepository;
-import com.desafio.cwi.services.exceptions.ObjectNotFoundException;
+import com.desafio.cwi.services.exceptions.ApiGenericException;
 import com.desafio.cwi.services.pauta.PautaCreateService;
 import com.desafio.cwi.services.pauta.PautaGetByIdService;
 
@@ -40,7 +41,7 @@ public class PautaCreateServiceTest {
 		verify(pautaRepository).save(any(Pauta.class));
 	}
 	
-	@Test(expected = ObjectNotFoundException.class)
+	@Test(expected = ApiGenericException.class)
 	public void deveRetornarUmErroQuandoSalvarPautaSemNome() {
 
 		Pauta pauta = getPauta();
@@ -50,11 +51,22 @@ public class PautaCreateServiceTest {
 		verify(pautaRepository, never()).save(any(Pauta.class));
 	}
 	
-	@Test(expected = ObjectNotFoundException.class)
+	@Test(expected = ApiGenericException.class)
 	public void deveRetornarUmErroQuandoSalvarPautaComNomeNulo() {
 
 		Pauta pauta = getPauta();
 		pauta.setName(null);
+		pautaCreateService.create(pauta);
+
+		verify(pautaRepository, never()).save(any(Pauta.class));
+	}
+	
+	@Test(expected = ApiGenericException.class)
+	public void deveRetornarUmErroQuandoSalvarPautaComNomeExistente() {
+		Pauta pauta = getPauta();			
+		
+		when(pautaRepository.findByName(pauta.getName())).thenReturn(pauta);
+		
 		pautaCreateService.create(pauta);
 
 		verify(pautaRepository, never()).save(any(Pauta.class));
