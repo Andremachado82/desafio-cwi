@@ -62,4 +62,4 @@ Cadastrar sessão: `/v1/pauta/{idPauta}/sessao`
 
 Cadastrar voto: `/v1/pautas/{idPauta}/sessoes/{idSessao}/votos`
 
-Ao iniciar sessão de votação essa terá o tempo máximo de 1 minuto de duração após esse temo a sessão é expirada.
+Ao iniciar sessão de votação essa terá o tempo máximo de 1 minuto de duração após esse tempo a sessão é expirada.
