@@ -5,17 +5,15 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.Random;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import com.desafio.cwi.exceptions.ApiGenericException;
 import com.desafio.cwi.models.Pauta;
 import com.desafio.cwi.repositories.PautaRepository;
-import com.desafio.cwi.services.exceptions.ApiGenericException;
 import com.desafio.cwi.services.pauta.PautaCreateService;
 import com.desafio.cwi.services.pauta.PautaGetByIdService;
 
@@ -74,8 +72,8 @@ public class PautaCreateServiceTest {
 	
 	public Pauta getPauta() {
 		return Pauta.builder()
-				.id(new Random()
-				.nextLong()).name("Pauta 1")
+				.id(1l)
+				.name("Pauta 1")
 				.description("Descrição")
 				.build();
 	}

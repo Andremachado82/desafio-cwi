@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,6 +24,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @Api(value="API REST Voto controller")
+@RequestMapping("/v1/pautas/")
 public class VotoController {
 	
 	@Autowired
@@ -34,21 +36,21 @@ public class VotoController {
 	@Autowired
 	VotoFindByIdService votoFindByIdService;
 
-	@PostMapping("/v1/pautas/{idPauta}/sessoes/{idSessao}/votos")
+	@PostMapping("{idPauta}/sessoes/{idSessao}/votos")
 	@ApiOperation(value="Cria um voto em uma sessão dentro de uma pauta")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public Voto create(@PathVariable Long idPauta, @PathVariable Long idSessao, @RequestBody @Valid Voto voto) {
 		return votoCreateService.create(idPauta, idSessao, voto);
 	} 
 	
-	@GetMapping("/v1/pautas/sessoes/votos")
+	@GetMapping("sessoes/votos")
 	@ApiOperation(value="Retorna uma lista de Votos")
 	@ResponseStatus(code = HttpStatus.OK)
 	public List<Voto> findAll() {
 		return votoFindAllService.findAll();
 	} 
 	
-	@GetMapping("v1/pautas/sessoes/votos/{id}")
+	@GetMapping("sessoes/votos/{id}")
 	@ApiOperation(value="Retorna um voto por ID")
 	@ResponseStatus(code = HttpStatus.OK)
 	public Voto findById(@PathVariable Long id) throws Exception {

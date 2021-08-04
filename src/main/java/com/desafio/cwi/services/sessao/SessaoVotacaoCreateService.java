@@ -5,11 +5,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.desafio.cwi.exceptions.ApiGenericException;
 import com.desafio.cwi.models.Pauta;
 import com.desafio.cwi.models.SessaoVotacao;
 import com.desafio.cwi.repositories.PautaRepository;
 import com.desafio.cwi.repositories.SessaoVotacaoRepository;
-import com.desafio.cwi.services.exceptions.ApiGenericException;
 
 @Service
 public class SessaoVotacaoCreateService {

@@ -12,11 +12,10 @@ import com.desafio.cwi.repositories.PautaRepository;
 public class PautaGetAllService {
 	
 	@Autowired
-	private PautaRepository pautaRepository;
+	PautaRepository pautaRepository;
 	
-	public List<Pauta> getAllPauta() {
+	public List<Pauta> findAll() {
 		List<Pauta> listPauta = pautaRepository.findAll();
-		
 		return listPauta;
 	}
 }

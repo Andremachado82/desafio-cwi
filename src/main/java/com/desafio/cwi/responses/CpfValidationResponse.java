@@ -1,4 +1,4 @@
-package com.desafio.cwi.recursos;
+package com.desafio.cwi.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

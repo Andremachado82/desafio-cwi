@@ -5,24 +5,23 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.desafio.cwi.exceptions.ApiGenericException;
 import com.desafio.cwi.models.SessaoVotacao;
 import com.desafio.cwi.repositories.SessaoVotacaoRepository;
-import com.desafio.cwi.services.exceptions.ApiGenericException;
 
 @Service
 public class SessaoVotacaoGetByIdService {
 	
 	@Autowired
-	private SessaoVotacaoRepository sessaoVotacaoRepository;
+	SessaoVotacaoRepository sessaoVotacaoRepository;
 	
 	public SessaoVotacao findById(Long id) {
-		SessaoVotacao sessaoExists = findSessaoById(id);
-		
+		var sessaoExists = findSessaoById(id);
 		return sessaoExists;
 	}
 	
 	public SessaoVotacao findSessaoById(Long id) {
-		SessaoVotacao sessao = sessaoVotacaoRepository.findById(id).orElseThrow(() -> new ApiGenericException(
+		var sessao = sessaoVotacaoRepository.findById(id).orElseThrow(() -> new ApiGenericException(
 				"Sessão não encontrado com o ID: " + id + ", Tipo: " + SessaoVotacao.class.getName()));
 		return sessao;
 	}
@@ -32,7 +31,6 @@ public class SessaoVotacaoGetByIdService {
 		if (!sessao.isPresent()) {
 			throw new ApiGenericException("Sessão não encontrado com o ID:" + idSessao + ", Tipo: " + SessaoVotacao.class.getName());
 		}
-		
 		return sessao.get();
 	}
 }

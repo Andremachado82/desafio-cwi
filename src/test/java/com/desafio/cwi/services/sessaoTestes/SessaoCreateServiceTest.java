@@ -13,11 +13,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import com.desafio.cwi.exceptions.ApiGenericException;
 import com.desafio.cwi.models.Pauta;
 import com.desafio.cwi.models.SessaoVotacao;
 import com.desafio.cwi.repositories.PautaRepository;
 import com.desafio.cwi.repositories.SessaoVotacaoRepository;
-import com.desafio.cwi.services.exceptions.ApiGenericException;
 import com.desafio.cwi.services.sessao.SessaoVotacaoCreateService;
 
 @RunWith(MockitoJUnitRunner.class)

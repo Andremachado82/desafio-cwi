@@ -12,7 +12,7 @@ import com.desafio.cwi.repositories.SessaoVotacaoRepository;
 public class SessaoVotacaoFindAllService {
 	
 	@Autowired
-	private SessaoVotacaoRepository sessaoVotacaoRepository;
+	SessaoVotacaoRepository sessaoVotacaoRepository;
 	
 	public List<SessaoVotacao> findAll() {
 		List<SessaoVotacao> listSessao = sessaoVotacaoRepository.findAll();
