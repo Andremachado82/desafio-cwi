@@ -13,13 +13,8 @@ public class PautaGetByIdService {
 	@Autowired
 	PautaRepository pautaRepository;
 	
-	public Pauta findById(Long id) {
-		return findPautaById(id);		
-	}
-	
-	public Pauta findPautaById(Long id) {
-		var pauta = pautaRepository.findById(id).orElseThrow(() -> new ApiGenericException(
-				"Pauta não encontrada com ID: " + id + ", Tipo: " + Pauta.class.getName()));
-		return pauta;
+	public Pauta execute(Long id) {
+		return pautaRepository.findById(id).orElseThrow(() -> new ApiGenericException(
+				"Pauta não encontrada!"));		
 	}
 }

@@ -14,8 +14,7 @@ public class PautaGetAllService {
 	@Autowired
 	PautaRepository pautaRepository;
 	
-	public List<Pauta> findAll() {
-		List<Pauta> listPauta = pautaRepository.findAll();
-		return listPauta;
+	public List<Pauta> execute() {
+		return pautaRepository.findAll();
 	}
 }

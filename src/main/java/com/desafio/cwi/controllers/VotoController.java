@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.desafio.cwi.dtos.VotoDTO;
+import com.desafio.cwi.models.Pauta;
 import com.desafio.cwi.models.Voto;
 import com.desafio.cwi.services.voto.VotoCreateService;
 import com.desafio.cwi.services.voto.VotoFindAllService;
@@ -24,7 +26,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @Api(value="API REST Voto controller")
-@RequestMapping("/v1/pautas/")
+@RequestMapping("/v1/votos")
 public class VotoController {
 	
 	@Autowired
@@ -36,21 +38,26 @@ public class VotoController {
 	@Autowired
 	VotoFindByIdService votoFindByIdService;
 
-	@PostMapping("{idPauta}/sessoes/{idSessao}/votos")
+	@PostMapping()
 	@ApiOperation(value="Cria um voto em uma sessão dentro de uma pauta")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public Voto create(@PathVariable Long idPauta, @PathVariable Long idSessao, @RequestBody @Valid Voto voto) {
-		return votoCreateService.create(idPauta, idSessao, voto);
+	public Voto create(@RequestBody @Valid VotoDTO votoDTO) {
+		Voto voto = Voto.builder()
+					.cpf(votoDTO.getCpf())
+					.escolha(votoDTO.getEscolha())
+					.pauta(new Pauta(votoDTO.getIdPauta(), null, null))
+					.build();
+		return votoCreateService.execute(votoDTO.getIdSessao(), voto);
 	} 
 	
-	@GetMapping("sessoes/votos")
+	@GetMapping("/sessoes/votos")
 	@ApiOperation(value="Retorna uma lista de Votos")
 	@ResponseStatus(code = HttpStatus.OK)
 	public List<Voto> findAll() {
 		return votoFindAllService.findAll();
 	} 
 	
-	@GetMapping("sessoes/votos/{id}")
+	@GetMapping("/sessoes/votos/{id}")
 	@ApiOperation(value="Retorna um voto por ID")
 	@ResponseStatus(code = HttpStatus.OK)
 	public Voto findById(@PathVariable Long id) throws Exception {

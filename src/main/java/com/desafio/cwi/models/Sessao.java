@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SessaoVotacao implements Serializable {
+public class Sessao implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -31,6 +31,6 @@ public class SessaoVotacao implements Serializable {
 	
 	private Long tempoSessao;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Pauta pauta;
 }

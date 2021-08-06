@@ -15,50 +15,50 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import com.desafio.cwi.exceptions.ApiGenericException;
 import com.desafio.cwi.models.Pauta;
-import com.desafio.cwi.models.SessaoVotacao;
+import com.desafio.cwi.models.Sessao;
 import com.desafio.cwi.repositories.PautaRepository;
-import com.desafio.cwi.repositories.SessaoVotacaoRepository;
-import com.desafio.cwi.services.sessao.SessaoVotacaoCreateService;
+import com.desafio.cwi.repositories.SessaoRepository;
+import com.desafio.cwi.services.sessao.SessaoCreateService;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SessaoCreateServiceTest {
 
 	@InjectMocks
-	private SessaoVotacaoCreateService sessaoCreateService;
+	private SessaoCreateService sessaoCreateService;
 	
 	@Mock
 	private PautaRepository pautaRepository;
 	
 	@Mock
-	private SessaoVotacaoRepository sessaoVotacaoRepository;
+	private SessaoRepository sessaoVotacaoRepository;
 
 	@Test(expected = ApiGenericException.class)
 	public void deveOcorrerErroQuandoSalvarSessaoComDataNula() {
 
-		SessaoVotacao sessao = getSessao();
+		Sessao sessao = getSessao();
 		sessao.setDataHoraInicio(null);
 		
-		sessaoCreateService.create(getPauta().getId(), sessao);
+		sessaoCreateService.execute(sessao);
 		sessao.setPauta(getPauta());
 
-		verify(sessaoVotacaoRepository, never()).save(any(SessaoVotacao.class));
+		verify(sessaoVotacaoRepository, never()).save(any(Sessao.class));
 	}
 	
 	@Test(expected = ApiGenericException.class)
 	public void deveOcorrerErroAoSalvarQuandoNaoExistirPauta() {
 		
-		SessaoVotacao sessao = getSessao();
+		Sessao sessao = getSessao();
 		
-		sessaoCreateService.create(getPauta().getId(), sessao);
+		sessaoCreateService.execute(sessao);
 
-		verify(sessaoVotacaoRepository, never()).save(any(SessaoVotacao.class));
+		verify(sessaoVotacaoRepository, never()).save(any(Sessao.class));
 	}
 	
-	public SessaoVotacao getSessao() {
-		return SessaoVotacao.builder()
+	public Sessao getSessao() {
+		return Sessao.builder()
 				.id(new Random()
 				.nextLong()).dataHoraInicio(LocalDateTime.now())
-				.pauta(null)
+				.pauta(getPauta())
 				.build();
 	}
 	public Pauta getPauta() {

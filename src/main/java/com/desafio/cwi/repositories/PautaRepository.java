@@ -6,5 +6,5 @@ import com.desafio.cwi.models.Pauta;
 
 public interface PautaRepository extends JpaRepository<Pauta, Long>{
 
-	Pauta findByName(String nome);
+	Pauta findByName(String nome);	
 }

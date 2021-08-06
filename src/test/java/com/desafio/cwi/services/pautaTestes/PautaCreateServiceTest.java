@@ -34,7 +34,7 @@ public class PautaCreateServiceTest {
 
 		Pauta pauta = getPauta();
 
-		pautaCreateService.create(pauta);
+		pautaCreateService.execute(pauta);
 
 		verify(pautaRepository).save(any(Pauta.class));
 	}
@@ -44,7 +44,7 @@ public class PautaCreateServiceTest {
 
 		Pauta pauta = getPauta();
 		pauta.setName("");
-		pautaCreateService.create(pauta);
+		pautaCreateService.execute(pauta);
 
 		verify(pautaRepository, never()).save(any(Pauta.class));
 	}
@@ -54,7 +54,7 @@ public class PautaCreateServiceTest {
 
 		Pauta pauta = getPauta();
 		pauta.setName(null);
-		pautaCreateService.create(pauta);
+		pautaCreateService.execute(pauta);
 
 		verify(pautaRepository, never()).save(any(Pauta.class));
 	}
@@ -65,7 +65,7 @@ public class PautaCreateServiceTest {
 		
 		when(pautaRepository.findByName(pauta.getName())).thenReturn(pauta);
 		
-		pautaCreateService.create(pauta);
+		pautaCreateService.execute(pauta);
 
 		verify(pautaRepository, never()).save(any(Pauta.class));
 	}

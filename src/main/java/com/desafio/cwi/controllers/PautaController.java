@@ -25,7 +25,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @Api(value="API REST Pauta controller")
-@RequestMapping("/v1/pautas/")
+@RequestMapping("/v1/pautas")
 public class PautaController {
 	
 	@Autowired
@@ -45,20 +45,20 @@ public class PautaController {
 				.name(pautaDTO.getName())
 				.description(pautaDTO.getDescription())
 				.build();
-		return pautaCreateService.create(pauta);
+		return pautaCreateService.execute(pauta);
 	}
 	
 	@GetMapping
 	@ApiOperation(value="Retorna uma lista de pautas")
 	@ResponseStatus(code = HttpStatus.OK)
 	public List<Pauta> findAll() {
-		return pautaGetAllService.findAll();
+		return pautaGetAllService.execute();
 	}
 	
-	@GetMapping("{id}")
+	@GetMapping("/{id}")
 	@ApiOperation(value="Retorna uma pauta por ID")
 	@ResponseStatus(code = HttpStatus.OK)	
 	public Pauta findById(@PathVariable Long id) throws Exception {
-		return pautaGetByIdService.findById(id);
+		return pautaGetByIdService.execute(id);
 	}
 }
