@@ -31,7 +31,7 @@ public class SessaoCreateService {
 			throw new InvalidDateException("Data inválida");
 		}
 		verificaTempoSessao(sessao);
-		if (sessao.getPauta() == null && sessao.getPauta().getId() == null) {
+		if (sessao.getPauta() == null || sessao.getPauta().getId() == null) {
 			throw new PautaNotFoundException("Uma Pauta deve ser informada!");
 		}
 		sessao.setPauta(pautaGetByIdService.execute(sessao.getPauta().getId()));

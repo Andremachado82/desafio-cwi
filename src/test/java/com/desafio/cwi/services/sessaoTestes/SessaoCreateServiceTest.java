@@ -14,6 +14,8 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import com.desafio.cwi.exceptions.ApiGenericException;
+import com.desafio.cwi.exceptions.InvalidDateException;
+import com.desafio.cwi.exceptions.PautaNotFoundException;
 import com.desafio.cwi.models.Pauta;
 import com.desafio.cwi.models.Sessao;
 import com.desafio.cwi.repositories.PautaRepository;
@@ -32,22 +34,33 @@ public class SessaoCreateServiceTest {
 	@Mock
 	private SessaoRepository sessaoVotacaoRepository;
 
-	@Test(expected = ApiGenericException.class)
-	public void deveOcorrerErroQuandoSalvarSessaoComDataNula() {
+	@Test(expected = InvalidDateException.class)
+	public void deveOcorrerErroQuandoSalvarSessaoComDataAntesDaDataAtual() {
 
 		Sessao sessao = getSessao();
-		sessao.setDataHoraInicio(null);
+		sessao.setDataHoraInicio(LocalDateTime.of(2018, 07, 22, 10, 15, 30));
 		
 		sessaoCreateService.execute(sessao);
-		sessao.setPauta(getPauta());
+
+		verify(sessaoVotacaoRepository, never()).save(any(Sessao.class));
+	}
+	
+	@Test(expected = PautaNotFoundException.class)
+	public void deveOcorrerErroAoSalvarQuandoNaoExistirPauta() {
+		
+		Sessao sessao = getSessao();
+		sessao.setPauta(null);
+		
+		sessaoCreateService.execute(sessao);
 
 		verify(sessaoVotacaoRepository, never()).save(any(Sessao.class));
 	}
 	
 	@Test(expected = ApiGenericException.class)
-	public void deveOcorrerErroAoSalvarQuandoNaoExistirPauta() {
+	public void deveOcorrerErroAoSalvarQuandoTempoSessaoForMenorQueUm() {
 		
 		Sessao sessao = getSessao();
+		sessao.setTempoSessao(-1l);
 		
 		sessaoCreateService.execute(sessao);
 
@@ -57,7 +70,7 @@ public class SessaoCreateServiceTest {
 	public Sessao getSessao() {
 		return Sessao.builder()
 				.id(new Random()
-				.nextLong()).dataHoraInicio(LocalDateTime.now())
+				.nextLong()).dataHoraInicio(null)
 				.pauta(getPauta())
 				.build();
 	}
