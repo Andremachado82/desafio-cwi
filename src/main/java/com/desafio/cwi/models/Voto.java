@@ -35,7 +35,7 @@ public class Voto implements Serializable {
 	private String cpf;
 	
 	@NotNull(message = "Escolha de voto obrigatória")
-	private Boolean escolha;
+	private Boolean resposta;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Pauta pauta;

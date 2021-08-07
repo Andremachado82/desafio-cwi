@@ -48,7 +48,7 @@ public class VotoCreateService {
 	}
 
 	private Voto verificaVoto(Sessao sessao, Voto voto) {
-		if (voto.getEscolha() == null) {
+		if (voto.getResposta() == null) {
 			throw new ApiGenericException("Escolha do voto não pode ser nula");
 		}
 		LocalDateTime dataLimite = sessao.getDataHoraInicio().plusMinutes(sessao.getTempoSessao());

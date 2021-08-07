@@ -29,6 +29,9 @@ public class SessaoCreateService {
 			throw new ApiGenericException("Data inválida");
 		}
 		verificaTempoSessao(sessao);
+		if (sessao.getPauta() == null && sessao.getPauta().getId() == null) {
+			throw new ApiGenericException("Uma Pauta deve ser informada!");
+		}
 		sessao.setPauta(pautaGetByIdService.execute(sessao.getPauta().getId()));
 		Sessao sessaoSalva = sessaoVotacaoRepository.save(sessao);
 		log.info("Sessão criada com sucesso!");

@@ -18,7 +18,6 @@ import com.desafio.cwi.dtos.VotoDTO;
 import com.desafio.cwi.models.Pauta;
 import com.desafio.cwi.models.Voto;
 import com.desafio.cwi.services.voto.VotoCreateService;
-import com.desafio.cwi.services.voto.VotoFindAllService;
 import com.desafio.cwi.services.voto.VotoFindByIdService;
 
 import io.swagger.annotations.Api;
@@ -33,9 +32,6 @@ public class VotoController {
 	VotoCreateService votoCreateService;
 	
 	@Autowired
-	VotoFindAllService votoFindAllService;
-	
-	@Autowired
 	VotoFindByIdService votoFindByIdService;
 
 	@PostMapping()
@@ -44,17 +40,10 @@ public class VotoController {
 	public Voto create(@RequestBody @Valid VotoDTO votoDTO) {
 		Voto voto = Voto.builder()
 					.cpf(votoDTO.getCpf())
-					.escolha(votoDTO.getEscolha())
+					.resposta(votoDTO.getResposta())
 					.pauta(new Pauta(votoDTO.getIdPauta(), null, null))
 					.build();
 		return votoCreateService.execute(votoDTO.getIdSessao(), voto);
-	} 
-	
-	@GetMapping("/sessoes/votos")
-	@ApiOperation(value="Retorna uma lista de Votos")
-	@ResponseStatus(code = HttpStatus.OK)
-	public List<Voto> findAll() {
-		return votoFindAllService.findAll();
 	} 
 	
 	@GetMapping("/sessoes/votos/{id}")
