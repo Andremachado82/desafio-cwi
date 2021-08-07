@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.desafio.cwi.exceptions.ApiGenericException;
+import com.desafio.cwi.exceptions.InvalidDateException;
+import com.desafio.cwi.exceptions.PautaNotFoundException;
 import com.desafio.cwi.models.Sessao;
 import com.desafio.cwi.repositories.SessaoRepository;
 import com.desafio.cwi.services.pauta.PautaGetByIdService;
@@ -26,11 +28,11 @@ public class SessaoCreateService {
 		if (sessao.getDataHoraInicio() == null ) {
 			sessao.setDataHoraInicio(LocalDateTime.now());
 		} else if (sessao.getDataHoraInicio().isBefore(LocalDateTime.now())) {
-			throw new ApiGenericException("Data inválida");
+			throw new InvalidDateException("Data inválida");
 		}
 		verificaTempoSessao(sessao);
 		if (sessao.getPauta() == null && sessao.getPauta().getId() == null) {
-			throw new ApiGenericException("Uma Pauta deve ser informada!");
+			throw new PautaNotFoundException("Uma Pauta deve ser informada!");
 		}
 		sessao.setPauta(pautaGetByIdService.execute(sessao.getPauta().getId()));
 		Sessao sessaoSalva = sessaoVotacaoRepository.save(sessao);
