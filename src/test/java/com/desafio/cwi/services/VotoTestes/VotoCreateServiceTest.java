@@ -46,7 +46,7 @@ public class VotoCreateServiceTest {
 	private CpfValidationClient cpfValidationClient;
 	
 	@Mock
-	private VotoRepository sessaoVotacaoRepository;
+	private VotoRepository votoRepository;
 
 	@Test(expected = PautaNotFoundException.class)
 	public void deveOcorrerErroAoSalvarQuandoPautaNãoExistir() {
@@ -56,7 +56,7 @@ public class VotoCreateServiceTest {
 		
 		when(pautaRepository.findById(voto.getPauta().getId())).thenReturn(null);
 
-		verify(sessaoVotacaoRepository, never()).save(any(Voto.class));
+		verify(votoRepository, never()).save(any(Voto.class));
 	}
 	
 	@Test(expected = PautaNotFoundException.class)
@@ -68,7 +68,7 @@ public class VotoCreateServiceTest {
 		
 		when(sessaoRepository.findById(1l)).thenReturn(null);
 
-		verify(sessaoVotacaoRepository, never()).save(any(Voto.class));
+		verify(votoRepository, never()).save(any(Voto.class));
 	}
 	
 	@Test(expected = ApiGenericException.class)
@@ -86,7 +86,7 @@ public class VotoCreateServiceTest {
 		votoCreateService.execute(1l, voto);
 
 		
-		verify(sessaoVotacaoRepository, never()).save(any(Voto.class));
+		verify(votoRepository, never()).save(any(Voto.class));
 	}
 	
 	@Test(expected = SessionExperidException.class)
@@ -106,7 +106,7 @@ public class VotoCreateServiceTest {
 		
 		votoCreateService.execute(1l, voto);
 
-		verify(sessaoVotacaoRepository, never()).save(any(Voto.class));
+		verify(votoRepository, never()).save(any(Voto.class));
 	}
 	
 	@Test(expected = CpfNotFoundException.class)
@@ -126,7 +126,7 @@ public class VotoCreateServiceTest {
 		
 		votoCreateService.execute(1l, voto);
 
-		verify(sessaoVotacaoRepository, never()).save(any(Voto.class));
+		verify(votoRepository, never()).save(any(Voto.class));
 	}
 	
 	@Test(expected = UnableCpfException.class)
@@ -150,7 +150,34 @@ public class VotoCreateServiceTest {
 		
 		votoCreateService.execute(1l, voto);
 
-		verify(sessaoVotacaoRepository, never()).save(any(Voto.class));
+		verify(votoRepository, never()).save(any(Voto.class));
+	}
+	
+	@Test(expected = ApiGenericException.class)
+	public void deveOcorrerErroQuandoCpfExistirNaPauta() {
+		
+		Voto voto = getVoto();
+		voto.setResposta(true);
+		voto.setCpf("52990556095");
+		
+		Optional<Pauta> pautaSalva = Optional.ofNullable(getPauta());
+		when(pautaRepository.findById(voto.getPauta().getId())).thenReturn(pautaSalva);
+		
+		Optional<Sessao> sessaoSalva = Optional.ofNullable(getSessao());
+		sessaoSalva.get().setDataHoraInicio(LocalDateTime.now().plusMinutes(30));
+		sessaoSalva.get().setTempoSessao(1l);
+		when(sessaoRepository.findById(1l)).thenReturn(sessaoSalva);
+		
+		CpfValidationResponse cpfResponse = new CpfValidationResponse();
+		cpfResponse.setStatus("ABLE_TO_VOTE");
+		when(cpfValidationClient.findUserByCpf(voto.getCpf())).thenReturn(cpfResponse);
+		
+		Optional<Voto> votoSalvo =  Optional.ofNullable(new Voto());;
+		when(votoRepository.findByCpfAndPautaId(voto.getCpf(), voto.getPauta().getId())).thenReturn(votoSalvo);
+		
+		votoCreateService.execute(1l, voto);
+
+		verify(votoRepository, never()).save(any(Voto.class));
 	}
 	
 	public Voto getVoto() {

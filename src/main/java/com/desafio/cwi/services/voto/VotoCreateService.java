@@ -66,11 +66,11 @@ public class VotoCreateService {
 			throw new SessionExperidException("Sessão expirada");
 		}
 		cpfAbleToVote(voto);
-		verificaCpfExsiteNaPauta(voto);
+		verificaCpfExisteNaPauta(voto);
 		return voto;
 	}
 
-	private void verificaCpfExsiteNaPauta(Voto voto) {
+	private void verificaCpfExisteNaPauta(Voto voto) {
 		Optional<Voto> votoExistente = votoRepository.findByCpfAndPautaId(voto.getCpf(), voto.getPauta().getId());
 		if (votoExistente.isPresent()) {
 			throw new ApiGenericException("Já existe um voto registrado nesta Pauta de nº " + voto.getPauta().getId()
