@@ -1,8 +1,9 @@
 package com.desafio.cwi.dtos;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
-import com.sun.istack.NotNull;
+import org.hibernate.validator.constraints.br.CPF;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,15 +16,15 @@ import lombok.NoArgsConstructor;
 @Builder
 public class VotoDTO {
 	
-	@NotNull
+	@NotNull(message="Uma Pauta deve ser informada!")
 	private Long idPauta;
 	
-	@NotNull
+	@NotNull(message="Uma Sessão deve ser informada!")
 	private Long idSessao;
 	
-	@NotBlank
+	@CPF(message = "CPF inválido")
 	private String cpf;
 	
-	@NotNull
+	@NotNull(message = "Resposta de voto obrigatória")
 	private Boolean resposta;
 }

@@ -8,10 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.br.CPF;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,13 +24,10 @@ public class Voto implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long id;	
 	
-	@NotBlank
-	@CPF(message = "CPF inválido")
-	private String cpf;
+	private String cpf;	
 	
-	@NotNull(message = "Escolha de voto obrigatória")
 	private Boolean resposta;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
