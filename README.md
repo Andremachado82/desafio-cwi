@@ -41,25 +41,20 @@ Link do repositório: https://github.com/Andremachado82/desafio-cwi
 ## Endpoints
 
 Seguem abaixo os seguintes endpoints criados para o funcionamento da API versão 1.0:
-### GET
+#### GET
 
 Listar pautas: `/v1/pautas`
 
 Buscar pauta específica: `/v1/pautas/{id}`
 
-Listar sessões: `/v1/pauta/sessao`
+Listar resultado da votação: `/v1/votacao/resultado/{idPauta}`
 
-Buscar sessões específica: `/v1/pauta/sessao/{id}`
-
-Listar votos: `/v1/pautas/sessoes/votos`
-
-Buscar voto específico: `/v1/pautas/sessoes/votos/{id}`
-
-### POST
+#### POST
 Cadastrar pauta: `/v1/pautas`
 
-Cadastrar sessão: `/v1/pauta/{idPauta}/sessao`
+Cadastrar sessão: `/v1/sessao`
 
-Cadastrar voto: `/v1/pautas/{idPauta}/sessoes/{idSessao}/votos`
+Cadastrar voto: `/v1/votos`
 
-Ao iniciar sessão de votação essa terá o tempo máximo de 1 minuto de duração após esse tempo a sessão é expirada.
+- Ao iniciar sessão de votação essa terá o tempo máximo de 1 minuto de duração como padrão e após esse tempo a sessão é expirada.
+- O resultado da votação de uma pauta retornará a quantidade total de votos Sim e Não.
