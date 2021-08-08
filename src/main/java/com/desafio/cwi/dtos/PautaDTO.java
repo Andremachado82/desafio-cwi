@@ -14,5 +14,4 @@ public class PautaDTO {
 	private String name;
 	
 	private String description;
-
 }

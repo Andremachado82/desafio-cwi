@@ -21,5 +21,4 @@ public class SessaoDTO {
 	private LocalDateTime dataHoraInicio;
 	
 	private Long tempoSessao;
-
 }

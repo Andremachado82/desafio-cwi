@@ -1,6 +1,5 @@
 package com.desafio.cwi.dtos;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.br.CPF;
