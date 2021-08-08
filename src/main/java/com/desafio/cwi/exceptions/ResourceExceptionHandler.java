@@ -82,4 +82,14 @@ public class ResourceExceptionHandler {
 		
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 	}
+	
+	@ExceptionHandler(VotacaoNotFoundException.class)
+	public ResponseEntity<StandardError> objectNotFound(VotacaoNotFoundException e, HttpServletRequest request) {
+		Timestamp stamp = new Timestamp(System.currentTimeMillis());
+		String dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(stamp);
+		
+		StandardError error = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(), dateFormat);
+		
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+	}
 }
