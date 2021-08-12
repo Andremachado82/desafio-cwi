@@ -30,7 +30,7 @@ public class PautaCreateServiceTest {
 	private PautaRepository pautaRepository;
 
 	@Test
-	public void devecriarUmaPautaComSucesso() {
+	void devecriarUmaPautaComSucesso() {
 
 		Pauta pauta = getPauta();
 
@@ -40,7 +40,7 @@ public class PautaCreateServiceTest {
 	}
 	
 	@Test(expected = ApiGenericException.class)
-	public void deveRetornarUmErroQuandoSalvarPautaSemNome() {
+	void deveRetornarUmErroQuandoSalvarPautaSemNome() {
 
 		Pauta pauta = getPauta();
 		pauta.setName("");
@@ -50,7 +50,7 @@ public class PautaCreateServiceTest {
 	}
 	
 	@Test(expected = ApiGenericException.class)
-	public void deveRetornarUmErroQuandoSalvarPautaComNomeNulo() {
+	void deveRetornarUmErroQuandoSalvarPautaComNomeNulo() {
 
 		Pauta pauta = getPauta();
 		pauta.setName(null);
@@ -60,7 +60,7 @@ public class PautaCreateServiceTest {
 	}
 	
 	@Test(expected = ApiGenericException.class)
-	public void deveRetornarUmErroQuandoSalvarPautaComNomeExistente() {
+	void deveRetornarUmErroQuandoSalvarPautaComNomeExistente() {
 		Pauta pauta = getPauta();			
 		
 		when(pautaRepository.findByName(pauta.getName())).thenReturn(pauta);

@@ -41,7 +41,7 @@ public class SessaoCreateServiceTest {
 	private SessaoRepository sessaoVotacaoRepository;
 
 	@Test(expected = InvalidDateException.class)
-	public void deveOcorrerErroQuandoSalvarSessaoComDataAntesDaDataAtual() {
+	void deveOcorrerErroQuandoSalvarSessaoComDataAntesDaDataAtual() {
 
 		Sessao sessao = getSessao();
 		sessao.setDataHoraInicio(LocalDateTime.of(2018, 07, 22, 10, 15, 30));
@@ -52,7 +52,7 @@ public class SessaoCreateServiceTest {
 	}
 	
 	@Test(expected = PautaNotFoundException.class)
-	public void deveOcorrerErroAoSalvarQuandoNaoExistirPauta() {
+	void deveOcorrerErroAoSalvarQuandoNaoExistirPauta() {
 		
 		Sessao sessao = getSessao();
 		sessao.setPauta(null);
@@ -63,7 +63,7 @@ public class SessaoCreateServiceTest {
 	}
 	
 	@Test(expected = ApiGenericException.class)
-	public void deveOcorrerErroAoSalvarQuandoTempoSessaoForMenorQueUm() {
+	void deveOcorrerErroAoSalvarQuandoTempoSessaoForMenorQueUm() {
 		
 		Sessao sessao = getSessao();
 		sessao.setTempoSessao(-1l);
@@ -74,7 +74,7 @@ public class SessaoCreateServiceTest {
 	}
 	
 	@Test
-	public void deveSalvarSessaoComTempoSessaoPadraoQuandoTempoForNulo() {
+	void deveSalvarSessaoComTempoSessaoPadraoQuandoTempoForNulo() {
 		
 		Sessao sessao = getSessao();
 		sessao.setTempoSessao(null);

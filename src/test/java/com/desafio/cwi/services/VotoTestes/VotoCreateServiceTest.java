@@ -49,7 +49,7 @@ public class VotoCreateServiceTest {
 	private VotoRepository votoRepository;
 
 	@Test(expected = PautaNotFoundException.class)
-	public void deveOcorrerErroAoSalvarQuandoPautaNãoExistir() {
+	void deveOcorrerErroAoSalvarQuandoPautaNãoExistir() {
 
 		Voto voto = getVoto();
 		votoCreateService.execute(1l, voto);
@@ -60,7 +60,7 @@ public class VotoCreateServiceTest {
 	}
 	
 	@Test(expected = PautaNotFoundException.class)
-	public void deveOcorrerErroAoSalvarQuandoSessaoNãoExistir() {
+	void deveOcorrerErroAoSalvarQuandoSessaoNãoExistir() {
 		
 		Voto voto = getVoto();
 		
@@ -72,7 +72,7 @@ public class VotoCreateServiceTest {
 	}
 	
 	@Test(expected = ApiGenericException.class)
-	public void deveOcorrerErroAoSalvarQuandoRespostaForNula() {
+	void deveOcorrerErroAoSalvarQuandoRespostaForNula() {
 		
 		Voto voto = getVoto();
 		voto.setResposta(null);
@@ -90,7 +90,7 @@ public class VotoCreateServiceTest {
 	}
 	
 	@Test(expected = SessionExperidException.class)
-	public void deveOcorrerErroAoSalvarQuandoSessaoForExpirada() {
+	void deveOcorrerErroAoSalvarQuandoSessaoForExpirada() {
 		
 		Voto voto = getVoto();
 		voto.setResposta(true);
@@ -110,7 +110,7 @@ public class VotoCreateServiceTest {
 	}
 	
 	@Test(expected = CpfNotFoundException.class)
-	public void deveOcorrerErroAoSalvarQuandoCpfForNulo() {
+	void deveOcorrerErroAoSalvarQuandoCpfForNulo() {
 		
 		Voto voto = getVoto();
 		voto.setResposta(true);
@@ -130,7 +130,7 @@ public class VotoCreateServiceTest {
 	}
 	
 	@Test(expected = UnableCpfException.class)
-	public void deveOcorrerErroAoSalvarQuandoApiCpfRetornarUNABLE_TO_VOTE() {
+	void deveOcorrerErroAoSalvarQuandoApiCpfRetornarUNABLE_TO_VOTE() {
 		
 		Voto voto = getVoto();
 		voto.setResposta(true);
@@ -154,7 +154,7 @@ public class VotoCreateServiceTest {
 	}
 	
 	@Test(expected = ApiGenericException.class)
-	public void deveOcorrerErroQuandoCpfExistirNaPauta() {
+	void deveOcorrerErroQuandoCpfExistirNaPauta() {
 		
 		Voto voto = getVoto();
 		voto.setResposta(true);
