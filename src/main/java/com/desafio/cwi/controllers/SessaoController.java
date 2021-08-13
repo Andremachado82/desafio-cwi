@@ -1,7 +1,5 @@
 package com.desafio.cwi.controllers;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,11 +24,11 @@ public class SessaoController {
 	@Autowired
 	SessaoCreateService sessaoCreateService;
 	
-	@PostMapping()
+	@PostMapping
 	@ApiOperation(value="Cria uma sessão em uma Pauta")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public Sessao create(@RequestBody @Valid SessaoDTO sessaoDTO) {
-		Sessao sessao = Sessao.builder()
+	public Sessao create(@RequestBody SessaoDTO sessaoDTO) {
+		var sessao = Sessao.builder()
 						.dataHoraInicio(sessaoDTO.getDataHoraInicio())
 						.tempoSessao(sessaoDTO.getTempoSessao())
 						.pauta(new Pauta(sessaoDTO.getIdPauta(), null, null))

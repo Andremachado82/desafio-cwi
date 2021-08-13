@@ -25,17 +25,11 @@ public class SessaoCreateService {
 	PautaGetByIdService pautaGetByIdService;
 	
 	public Sessao execute(Sessao sessao) {
-		if (sessao.getDataHoraInicio() == null ) {
-			sessao.setDataHoraInicio(LocalDateTime.now());
-		} else if (sessao.getDataHoraInicio().isBefore(LocalDateTime.now())) {
-			throw new InvalidDateException("Data inválida");
-		}
+		validaDataHoraInicio(sessao);
 		verificaTempoSessao(sessao);
-		if (sessao.getPauta() == null || sessao.getPauta().getId() == null) {
-			throw new PautaNotFoundException("Uma Pauta deve ser informada!");
-		}
+		validaPautaExistente(sessao);
 		sessao.setPauta(pautaGetByIdService.execute(sessao.getPauta().getId()));
-		Sessao sessaoSalva = sessaoVotacaoRepository.save(sessao);
+		var sessaoSalva = sessaoVotacaoRepository.save(sessao);
 		log.info("Sessão criada com sucesso!");
 		return sessaoSalva;
 	}
@@ -46,6 +40,21 @@ public class SessaoCreateService {
 		}
 		if (sessao.getTempoSessao() == null) {
 			sessao.setTempoSessao(1l);
+		}
+		return sessao;
+	}
+	
+	public void validaPautaExistente(Sessao sessao) {
+		if (sessao.getPauta() == null || sessao.getPauta().getId() == null) {
+			throw new PautaNotFoundException("Uma Pauta deve ser informada!");
+		}
+	}
+	
+	public Sessao validaDataHoraInicio(Sessao sessao) {
+		if (sessao.getDataHoraInicio() == null ) {
+			sessao.setDataHoraInicio(LocalDateTime.now());
+		} else if (sessao.getDataHoraInicio().isBefore(LocalDateTime.now())) {
+			throw new InvalidDateException("A data não pode ser menor que a data atual!");
 		}
 		return sessao;
 	}

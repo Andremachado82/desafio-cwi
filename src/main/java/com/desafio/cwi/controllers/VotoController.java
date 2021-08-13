@@ -30,7 +30,7 @@ public class VotoController {
 	@ApiOperation(value="Cria um voto em uma sessão dentro de uma pauta")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public Voto create(@RequestBody @Valid VotoDTO votoDTO) {
-		Voto voto = Voto.builder()
+		var voto = Voto.builder()
 					.cpf(votoDTO.getCpf())
 					.resposta(votoDTO.getResposta())
 					.pauta(new Pauta(votoDTO.getIdPauta(), null, null))

@@ -25,8 +25,10 @@ import com.desafio.cwi.repositories.SessaoRepository;
 import com.desafio.cwi.services.pauta.PautaGetByIdService;
 import com.desafio.cwi.services.sessao.SessaoCreateService;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(MockitoJUnitRunner.Silent.class)
 public class SessaoCreateServiceTest {
+	final String NOME_PAUTA = "Pauta 1";
+	final String DESCRICAO_PAUTA = "Descrição";
 
 	@InjectMocks
 	private SessaoCreateService sessaoCreateService;
@@ -41,7 +43,7 @@ public class SessaoCreateServiceTest {
 	private SessaoRepository sessaoVotacaoRepository;
 
 	@Test(expected = InvalidDateException.class)
-	void deveOcorrerErroQuandoSalvarSessaoComDataAntesDaDataAtual() {
+	public void deveOcorrerErroQuandoSalvarSessaoComDataAntesDaDataAtual() {
 
 		Sessao sessao = getSessao();
 		sessao.setDataHoraInicio(LocalDateTime.of(2018, 07, 22, 10, 15, 30));
@@ -52,7 +54,7 @@ public class SessaoCreateServiceTest {
 	}
 	
 	@Test(expected = PautaNotFoundException.class)
-	void deveOcorrerErroAoSalvarQuandoNaoExistirPauta() {
+	public void deveOcorrerErroAoSalvarQuandoNaoExistirPauta() {
 		
 		Sessao sessao = getSessao();
 		sessao.setPauta(null);
@@ -63,7 +65,7 @@ public class SessaoCreateServiceTest {
 	}
 	
 	@Test(expected = ApiGenericException.class)
-	void deveOcorrerErroAoSalvarQuandoTempoSessaoForMenorQueUm() {
+	public void deveOcorrerErroAoSalvarQuandoTempoSessaoForMenorQueUm() {
 		
 		Sessao sessao = getSessao();
 		sessao.setTempoSessao(-1l);
@@ -74,7 +76,7 @@ public class SessaoCreateServiceTest {
 	}
 	
 	@Test
-	void deveSalvarSessaoComTempoSessaoPadraoQuandoTempoForNulo() {
+	public void deveSalvarSessaoComTempoSessaoPadraoQuandoTempoForNulo() {
 		
 		Sessao sessao = getSessao();
 		sessao.setTempoSessao(null);
@@ -97,10 +99,11 @@ public class SessaoCreateServiceTest {
 				.pauta(getPauta())
 				.build();
 	}
+	
 	public Pauta getPauta() {
 		return Pauta.builder()
-				.id(9l).name("Pauta 1")
-				.description("Descrição")
+				.id(9l).name(NOME_PAUTA)
+				.description(DESCRICAO_PAUTA)
 				.build();
 	}
 }

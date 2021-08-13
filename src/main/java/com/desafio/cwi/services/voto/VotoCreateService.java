@@ -18,7 +18,6 @@ import com.desafio.cwi.models.Voto;
 import com.desafio.cwi.repositories.PautaRepository;
 import com.desafio.cwi.repositories.SessaoRepository;
 import com.desafio.cwi.repositories.VotoRepository;
-import com.desafio.cwi.responses.CpfValidationResponse;
 import com.desafio.cwi.utils.FormataCPF;
 
 import feign.FeignException;
@@ -47,45 +46,45 @@ public class VotoCreateService {
 			voto.setPauta(pautaRepository.findById(voto.getPauta().getId())
 					.orElseThrow(() -> new PautaNotFoundException("Pauta não encontrada!")));
 		}
-		Sessao sessao = new Sessao();
+		var sessao = new Sessao();
 		if (idSessao != null) {
 			sessao = sessaoRepository.findById(idSessao)
 					.orElseThrow(() -> new SessaoNotFoundException("Sessão não encontrada!"));
 		}
-		votoRepository.save(verificaVoto(sessao, voto));		
+		verificaVoto(sessao, voto);
+		votoRepository.save(voto);		
 		log.info("Voto realizado com sucesso!");
 		return voto;
 	}
 
-	private Voto verificaVoto(Sessao sessao, Voto voto) {
+	private void verificaVoto(Sessao sessao, Voto voto) {
 		if (voto.getResposta() == null) {
 			throw new ApiGenericException("Resposta do voto não pode ser nula");
 		}
-		LocalDateTime dataLimite = sessao.getDataHoraInicio().plusMinutes(sessao.getTempoSessao());
+		var dataLimite = sessao.getDataHoraInicio().plusMinutes(sessao.getTempoSessao());
 		if (LocalDateTime.now().isAfter(dataLimite)) {
 			throw new SessionExperidException("Sessão expirada");
 		}
-		cpfAbleToVote(voto);
-		verificaCpfExisteNaPauta(voto);
-		return voto;
+		cpfAbleToVote(voto.getCpf());
+		verificaCpfExisteNaPauta(voto.getCpf(), voto.getPauta().getId());
 	}
 
-	private void verificaCpfExisteNaPauta(Voto voto) {
-		Optional<Voto> votoExistente = votoRepository.findByCpfAndPautaId(voto.getCpf(), voto.getPauta().getId());
+	private void verificaCpfExisteNaPauta(String cpf, Long idPauta) {
+		Optional<Voto> votoExistente = votoRepository.findByCpfAndPautaId(cpf, idPauta);
 		if (votoExistente.isPresent()) {
-			throw new ApiGenericException("Já existe um voto registrado nesta Pauta de nº " + voto.getPauta().getId()
-					+ " com o CPF " + voto.getCpf());
+			throw new ApiGenericException("Já existe um voto registrado nesta Pauta de nº " + idPauta
+					+ " com o CPF " + cpf);
 		}
 	}
 
-	protected void cpfAbleToVote(final Voto voto) {
-		if (voto.getCpf() == null || voto.getCpf().isBlank()) {
+	private void cpfAbleToVote(String cpf) {
+		if (cpf == null || cpf.isBlank()) {
 			throw new CpfNotFoundException("CPF deve ser informado!");
 		}
-		String cpfFormatado = FormataCPF.formataCpf(voto.getCpf());
+		String cpfFormatado = FormataCPF.formataCpf(cpf);
 		try {
-			CpfValidationResponse cpfResponse = cpfValidationClient.findUserByCpf(cpfFormatado);
-			if (cpfResponse.getStatus().equals(CPF_UNABLE_TO_VOTE)) {
+			var cpfResponse = cpfValidationClient.findUserByCpf(cpfFormatado);
+			if (CPF_UNABLE_TO_VOTE.equals(cpfResponse.getStatus())) {
 				throw new UnableCpfException("CPF sem permissão para voto");
 			}
 		} catch (FeignException e) {

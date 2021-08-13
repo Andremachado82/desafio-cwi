@@ -8,25 +8,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.desafio.cwi.dtos.VotacaoDto;
-import com.desafio.cwi.services.votacao.votacaoService;
+import com.desafio.cwi.dtos.ResultadoVotacaoDto;
+import com.desafio.cwi.services.votacao.ResultadoVotacaoByPautaIdService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
 @Api(value = "API REST Votação controller")
-@RequestMapping("/v1/votacao")
-public class VotacaoController {
+@RequestMapping("/v1/resultadoVotacao")
+public class ResultadoVotacaoController {
 	
 	@Autowired
-	votacaoService votacaoService;
+	ResultadoVotacaoByPautaIdService resultadoVotacaoService;
 	
 	@ApiOperation(value = "Lista o Resultado da Votação")
-	@GetMapping("/resultado/{idPauta}")
+	@GetMapping("/{idPauta}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public VotacaoDto findVotosByPautaId(@PathVariable Long idPauta) {
-		return votacaoService.getResultVotacao(idPauta);
+	public ResultadoVotacaoDto execute(@PathVariable Long idPauta) {
+		return resultadoVotacaoService.getResultadoVotacao(idPauta);
 	}
-
 }

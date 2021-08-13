@@ -19,6 +19,8 @@ import com.desafio.cwi.services.pauta.PautaGetByIdService;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PautaCreateServiceTest {
+	final String NOME_PAUTA = "Pauta 1";
+	final String DESCRICAO_PAUTA = "Descrição";
 
 	@InjectMocks
 	private PautaCreateService pautaCreateService;
@@ -30,7 +32,7 @@ public class PautaCreateServiceTest {
 	private PautaRepository pautaRepository;
 
 	@Test
-	void devecriarUmaPautaComSucesso() {
+	public void devecriarUmaPautaComSucesso() {
 
 		Pauta pauta = getPauta();
 
@@ -40,7 +42,7 @@ public class PautaCreateServiceTest {
 	}
 	
 	@Test(expected = ApiGenericException.class)
-	void deveRetornarUmErroQuandoSalvarPautaSemNome() {
+	public void deveRetornarUmErroQuandoSalvarPautaSemNome() {
 
 		Pauta pauta = getPauta();
 		pauta.setName("");
@@ -50,7 +52,7 @@ public class PautaCreateServiceTest {
 	}
 	
 	@Test(expected = ApiGenericException.class)
-	void deveRetornarUmErroQuandoSalvarPautaComNomeNulo() {
+	public void deveRetornarUmErroQuandoSalvarPautaComNomeNulo() {
 
 		Pauta pauta = getPauta();
 		pauta.setName(null);
@@ -60,7 +62,7 @@ public class PautaCreateServiceTest {
 	}
 	
 	@Test(expected = ApiGenericException.class)
-	void deveRetornarUmErroQuandoSalvarPautaComNomeExistente() {
+	public void deveRetornarUmErroQuandoSalvarPautaComNomeExistente() {
 		Pauta pauta = getPauta();			
 		
 		when(pautaRepository.findByName(pauta.getName())).thenReturn(pauta);
@@ -73,8 +75,8 @@ public class PautaCreateServiceTest {
 	public Pauta getPauta() {
 		return Pauta.builder()
 				.id(1l)
-				.name("Pauta 1")
-				.description("Descrição")
+				.name(NOME_PAUTA)
+				.description(DESCRICAO_PAUTA)
 				.build();
 	}
 }

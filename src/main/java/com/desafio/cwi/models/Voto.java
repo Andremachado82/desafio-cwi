@@ -9,8 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,5 +32,4 @@ public class Voto implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.LAZY)	
 	private Pauta pauta;
-
 }

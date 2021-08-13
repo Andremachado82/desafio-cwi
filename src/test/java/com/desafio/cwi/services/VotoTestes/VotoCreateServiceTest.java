@@ -32,6 +32,9 @@ import com.desafio.cwi.services.voto.VotoCreateService;
 
 @RunWith(MockitoJUnitRunner.class)
 public class VotoCreateServiceTest {
+	final String CPF = "52990556095";
+	final String UNABLE_TO_VOTE = "UNABLE_TO_VOTE";
+	final String ABLE_TO_VOTE = "ABLE_TO_VOTE";
 
 	@InjectMocks
 	private VotoCreateService votoCreateService;
@@ -49,7 +52,7 @@ public class VotoCreateServiceTest {
 	private VotoRepository votoRepository;
 
 	@Test(expected = PautaNotFoundException.class)
-	void deveOcorrerErroAoSalvarQuandoPautaNãoExistir() {
+	public void deveOcorrerErroAoSalvarQuandoPautaNãoExistir() {
 
 		Voto voto = getVoto();
 		votoCreateService.execute(1l, voto);
@@ -60,7 +63,7 @@ public class VotoCreateServiceTest {
 	}
 	
 	@Test(expected = PautaNotFoundException.class)
-	void deveOcorrerErroAoSalvarQuandoSessaoNãoExistir() {
+	public void deveOcorrerErroAoSalvarQuandoSessaoNãoExistir() {
 		
 		Voto voto = getVoto();
 		
@@ -72,7 +75,7 @@ public class VotoCreateServiceTest {
 	}
 	
 	@Test(expected = ApiGenericException.class)
-	void deveOcorrerErroAoSalvarQuandoRespostaForNula() {
+	public void deveOcorrerErroAoSalvarQuandoRespostaForNula() {
 		
 		Voto voto = getVoto();
 		voto.setResposta(null);
@@ -90,7 +93,7 @@ public class VotoCreateServiceTest {
 	}
 	
 	@Test(expected = SessionExperidException.class)
-	void deveOcorrerErroAoSalvarQuandoSessaoForExpirada() {
+	public void deveOcorrerErroAoSalvarQuandoSessaoForExpirada() {
 		
 		Voto voto = getVoto();
 		voto.setResposta(true);
@@ -110,7 +113,7 @@ public class VotoCreateServiceTest {
 	}
 	
 	@Test(expected = CpfNotFoundException.class)
-	void deveOcorrerErroAoSalvarQuandoCpfForNulo() {
+	public void deveOcorrerErroAoSalvarQuandoCpfForNulo() {
 		
 		Voto voto = getVoto();
 		voto.setResposta(true);
@@ -130,11 +133,11 @@ public class VotoCreateServiceTest {
 	}
 	
 	@Test(expected = UnableCpfException.class)
-	void deveOcorrerErroAoSalvarQuandoApiCpfRetornarUNABLE_TO_VOTE() {
+	public void deveOcorrerErroAoSalvarQuandoApiCpfRetornarUNABLE_TO_VOTE() {
 		
 		Voto voto = getVoto();
 		voto.setResposta(true);
-		voto.setCpf("52990556095");
+		voto.setCpf(CPF);
 		
 		Optional<Pauta> pautaSalva = Optional.ofNullable(getPauta());
 		when(pautaRepository.findById(voto.getPauta().getId())).thenReturn(pautaSalva);
@@ -145,7 +148,7 @@ public class VotoCreateServiceTest {
 		when(sessaoRepository.findById(1l)).thenReturn(sessaoSalva);
 		
 		CpfValidationResponse cpfResponse = new CpfValidationResponse();
-		cpfResponse.setStatus("UNABLE_TO_VOTE");
+		cpfResponse.setStatus(UNABLE_TO_VOTE);
 		when(cpfValidationClient.findUserByCpf(voto.getCpf())).thenReturn(cpfResponse);
 		
 		votoCreateService.execute(1l, voto);
@@ -154,11 +157,11 @@ public class VotoCreateServiceTest {
 	}
 	
 	@Test(expected = ApiGenericException.class)
-	void deveOcorrerErroQuandoCpfExistirNaPauta() {
+	public void deveOcorrerErroQuandoCpfExistirNaPauta() {
 		
 		Voto voto = getVoto();
 		voto.setResposta(true);
-		voto.setCpf("52990556095");
+		voto.setCpf(CPF);
 		
 		Optional<Pauta> pautaSalva = Optional.ofNullable(getPauta());
 		when(pautaRepository.findById(voto.getPauta().getId())).thenReturn(pautaSalva);
@@ -169,7 +172,7 @@ public class VotoCreateServiceTest {
 		when(sessaoRepository.findById(1l)).thenReturn(sessaoSalva);
 		
 		CpfValidationResponse cpfResponse = new CpfValidationResponse();
-		cpfResponse.setStatus("ABLE_TO_VOTE");
+		cpfResponse.setStatus(ABLE_TO_VOTE);
 		when(cpfValidationClient.findUserByCpf(voto.getCpf())).thenReturn(cpfResponse);
 		
 		Optional<Voto> votoSalvo =  Optional.ofNullable(new Voto());;

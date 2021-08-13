@@ -41,7 +41,7 @@ public class PautaController {
 	@ApiOperation(value="Cria uma pauta")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public Pauta create(@RequestBody @Valid PautaDTO pautaDTO) {
-		Pauta pauta = Pauta.builder()
+		var pauta = Pauta.builder()
 				.name(pautaDTO.getName())
 				.description(pautaDTO.getDescription())
 				.build();
@@ -58,7 +58,7 @@ public class PautaController {
 	@GetMapping("/{id}")
 	@ApiOperation(value="Retorna uma pauta por ID")
 	@ResponseStatus(code = HttpStatus.OK)	
-	public Pauta findById(@PathVariable Long id) throws Exception {
+	public Pauta findById(@PathVariable Long id) {
 		return pautaGetByIdService.execute(id);
 	}
 }

@@ -10,7 +10,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class VotacaoDto implements Serializable {
+public class ResultadoVotacaoDto implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
