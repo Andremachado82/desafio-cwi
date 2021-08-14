@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.desafio.cwi.client.CpfValidationClient;
+import com.desafio.cwi.enums.RespostaEnum;
 import com.desafio.cwi.exceptions.ApiGenericException;
 import com.desafio.cwi.exceptions.CpfNotFoundException;
 import com.desafio.cwi.exceptions.PautaNotFoundException;
@@ -89,6 +90,16 @@ public class VotoCreateService {
 			}
 		} catch (FeignException e) {
 			throw new ApiGenericException("Ocorreu um erro, tente novamente mais tarde!" + e.getMessage());
+		}
+	}
+	
+	public Boolean verificaResposta(String resposta) {
+		if (resposta.equals(RespostaEnum.SIM.getResposta())) {
+			return true;
+		} else if (resposta.equals(RespostaEnum.NAO.getResposta())) {
+			return false;
+		} else {
+			throw new ApiGenericException("A resposta deve ser Sim ou Não");
 		}
 	}
 }

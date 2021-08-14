@@ -25,5 +25,5 @@ public class VotoDTO {
 	private String cpf;
 	
 	@NotNull(message = "Resposta de voto obrigatória")
-	private Boolean resposta;
+	private String resposta;
 }

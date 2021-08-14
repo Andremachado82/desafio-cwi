@@ -32,7 +32,7 @@ public class VotoController {
 	public Voto create(@RequestBody @Valid VotoDTO votoDTO) {
 		var voto = Voto.builder()
 					.cpf(votoDTO.getCpf())
-					.resposta(votoDTO.getResposta())
+					.resposta(votoCreateService.verificaResposta(votoDTO.getResposta()))
 					.pauta(new Pauta(votoDTO.getIdPauta(), null, null))
 					.build();
 		return votoCreateService.execute(votoDTO.getIdSessao(), voto);

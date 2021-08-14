@@ -1,16 +1,14 @@
 package com.desafio.cwi.enums;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public enum RespostaEnum {
 	
 	SIM("Sim"),
 	NAO("Não");
 	
-	private String resposta;
-
-	RespostaEnum(String value) {
-        this.resposta = value;
-    }
+	private final String resposta;
 }
