@@ -17,52 +17,43 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
-	
+
 	@Value("${swagger.title}")
 	private String title;
-	
+
 	@Value("${swagger.description}")
 	private String description;
-	
+
 	@Value("${swagger.version}")
 	private String version;
-	
+
 	@Value("${swagger.terms}")
 	private String terms;
-	
+
 	@Value("${swagger.develloper-name}")
 	private String develloperName;
-	
+
 	@Value("${swagger.develloper-url}")
 	private String develloperUrl;
-	
+
 	@Value("${swagger.develloper-email}")
 	private String develloperEmail;
-	
+
 	@Value("${swagger.license}")
 	private String license;
-	
+
 	@Value("${swagger.license-url}")
 	private String licenseUrl;
 
 	@Bean
 	public Docket api() {
-		return new Docket(DocumentationType.SWAGGER_2)
-					.select().apis(RequestHandlerSelectors.any())
-					.paths(PathSelectors.any())
-					.build()
-					.apiInfo(metaInfo());
+		return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.any())
+				.paths(PathSelectors.any()).build().apiInfo(apiInfo());
 	}
 
-	private ApiInfo metaInfo() {
+	private ApiInfo apiInfo() {
 
-		ApiInfo apiInfo = new ApiInfo(
-				title, 
-				description,
-				version, terms,
-				new Contact(develloperName, develloperUrl ,develloperEmail),
-				license, licenseUrl, new ArrayList<>());
-
-		return apiInfo;
+		return new ApiInfo(title, description, version, terms,
+				new Contact(develloperName, develloperUrl, develloperEmail), license, licenseUrl, new ArrayList<>());
 	}
 }
