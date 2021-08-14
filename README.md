@@ -7,7 +7,7 @@ Utilizado o RabbitMQ como mensageria assícrona para envio do resultado da vota�
 
 ## RabbitMQ
 Com o projeto rodando acesse o link: https://elk.rmq2.cloudamqp.com/#/queues e insira os dados abaixo para visualizar as mensagens na fila do RabbitMQ.
-1. Nome da fila: "resultadoVotacao"
+1. Nome da fila: "resultVote"
 2. Usarname: vnkcstrq
 3. Senha: 4vu2APo5wJDTpRzqSYa-UmxMvYbVdX3S
 
@@ -46,18 +46,18 @@ Link do repositório: https://github.com/Andremachado82/desafio-cwi
 Seguem abaixo os seguintes endpoints criados para o funcionamento da API versão 1.0:
 #### GET
 
-Listar pautas: `/v1/pautas`
+Listar pautas: `/v1/schedule`
 
-Buscar pauta específica: `/v1/pautas/{id}`
+Buscar pauta específica: `/v1/schedule/{id}`
 
-Listar resultado da votação: `/v1/resultadoVotacao/{idPauta}`
+Listar resultado da votação: `/v2/resultVote/{idSchedule}`
 
 #### POST
-Cadastrar pauta: `/v1/pautas`
+Cadastrar pauta: `/v1/schedule`
 
-Cadastrar sessão: `/v1/sessao`
+Cadastrar sessão: `/v1/session`
 
-Cadastrar voto: `/v1/votos`
+Cadastrar voto: `/v1/vote`
 
 ## Notas adicionais
 - Ao iniciar sessão de votação essa terá o tempo máximo de 1 minuto de duração como padrão e após esse tempo a sessão é expirada.
