@@ -35,6 +35,8 @@ public class VotoCreateServiceTest {
 	final String CPF = "52990556095";
 	final String UNABLE_TO_VOTE = "UNABLE_TO_VOTE";
 	final String ABLE_TO_VOTE = "ABLE_TO_VOTE";
+	final String NOME_PAUTA = "Pauta 1";
+	final String DESCRICAO_PAUTA = "Descrição";
 
 	@InjectMocks
 	private VotoCreateService votoCreateService;
@@ -190,10 +192,11 @@ public class VotoCreateServiceTest {
 				.pauta(getPauta())
 				.build();
 	}
+	
 	public Pauta getPauta() {
 		return Pauta.builder()
-				.id(9l).name("Pauta 1")
-				.description("Descrição")
+				.id(9l).name(NOME_PAUTA)
+				.description(DESCRICAO_PAUTA)
 				.build();
 	}
 	
