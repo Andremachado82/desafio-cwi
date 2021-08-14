@@ -34,8 +34,8 @@ public class ResourceExceptionHandler {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
 	}
 	
-	@ExceptionHandler(SessaoNotFoundException.class)
-	public ResponseEntity<StandardError> objectNotFound(SessaoNotFoundException e, HttpServletRequest request) {
+	@ExceptionHandler(SessionNotFoundException.class)
+	public ResponseEntity<StandardError> objectNotFound(SessionNotFoundException e, HttpServletRequest request) {
 		var stamp = new Timestamp(System.currentTimeMillis());
 		String dateFormat = new SimpleDateFormat(FORMAT_DATE_TIME).format(stamp);
 		
@@ -84,8 +84,8 @@ public class ResourceExceptionHandler {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 	}
 	
-	@ExceptionHandler(VotacaoNotFoundException.class)
-	public ResponseEntity<StandardError> objectNotFound(VotacaoNotFoundException e, HttpServletRequest request) {
+	@ExceptionHandler(VoteNotFoundException.class)
+	public ResponseEntity<StandardError> objectNotFound(VoteNotFoundException e, HttpServletRequest request) {
 		var stamp = new Timestamp(System.currentTimeMillis());
 		String dateFormat = new SimpleDateFormat(FORMAT_DATE_TIME).format(stamp);
 		

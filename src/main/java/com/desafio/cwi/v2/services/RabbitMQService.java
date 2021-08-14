@@ -4,7 +4,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.desafio.cwi.dtos.ResultadoVotacaoDto;
+import com.desafio.cwi.dtos.ResultVoteDto;
 import com.desafio.cwi.exceptions.ApiGenericException;
 
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,7 @@ public class RabbitMQService {
 	@Autowired
 	RabbitTemplate rabbitTemplate;
 	
-	public void enviaResultadoVotacao(String nomeFila, ResultadoVotacaoDto votacaoPauta) {
+	public void enviaResultadoVotacao(String nomeFila, ResultVoteDto votacaoPauta) {
 		try {
 			rabbitTemplate.convertAndSend(nomeFila, votacaoPauta);
 			log.info("Mensagem com o resultado enviada com sucesso!");
