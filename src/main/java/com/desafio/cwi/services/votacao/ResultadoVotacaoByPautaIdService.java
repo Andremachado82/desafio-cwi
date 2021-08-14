@@ -10,21 +10,27 @@ import com.desafio.cwi.exceptions.VotacaoNotFoundException;
 import com.desafio.cwi.models.Voto;
 import com.desafio.cwi.repositories.SessaoRepository;
 import com.desafio.cwi.repositories.VotoRepository;
+import com.desafio.cwi.v2.services.RabbitMQService;
 
 @Service
 public class ResultadoVotacaoByPautaIdService {
+	public static final String RESULTADO_VOTACAO = "resultadoVotacao";
 	
 	@Autowired
 	VotoRepository votoRepository;
 	
 	@Autowired
-	SessaoRepository sessaoRepository;
+	SessaoRepository sessaoRepository;	
+	
+	@Autowired
+	RabbitMQService rabbitMQService;
 	
 	public ResultadoVotacaoDto getResultadoVotacao(Long idPauta){
-		ResultadoVotacaoDto votacaoPauta = montaDtoVotacao(idPauta);
+		ResultadoVotacaoDto votacaoPauta = montaDtoVotacao(idPauta);	
+		rabbitMQService.enviaResultadoVotacao(RESULTADO_VOTACAO, votacaoPauta);
 		return votacaoPauta;
-	}
-	
+	}	
+
 	public ResultadoVotacaoDto montaDtoVotacao(Long idPauta) {
 		 List<Voto> votosByPauta = votoRepository.findByPautaId(idPauta)
 				    .orElseThrow(() -> new VotacaoNotFoundException("Voto não encontrado!"));
