@@ -22,7 +22,7 @@ Link do repositório: https://github.com/Andremachado82/desafio-cwi
 2. Abra a basta desafio-cwi
 3. Abra o eclipse ou intelijj e import o projeto.
 4. Com o projeto importado expanda a pasta com.desafio.cwi e roder o arquivo DesafioCwiApplication.java 
-5. Para acessar o banco de dados h2 copie e cole o link e rode no navegador: http://localhost:8083/h2-console 
+5. Para acessar o banco de dados h2 copie e cole o link e rode no navegador: http://localhost:8083/h2 
 - imagem da tela incial: https://miro.medium.com/max/1400/1*siuOUhRCqO8eP6gxaBIZ4w.png
 6. Para acessar a documentação pelo Swagger copie e cole o link no seu navegador: http://localhost:8083/swagger-ui.html
 
@@ -40,7 +40,7 @@ Link do repositório: https://github.com/Andremachado82/desafio-cwi
 - Para os dados inseridos na aplicação sejam persistidos no banco e não sejam perdidos ao restart da aplicação é necessário que no arquivo apllication.properties deve existir as seguinte configurações:
 
 - spring.jpa.hibernate.ddl-auto=update
-- spring.datasource.url=jdbc:h2:file:~/test
+- spring.datasource.url=jdbc:h2:file:~/cwi
 
 ## Endpoints
 Seguem abaixo os seguintes endpoints criados para o funcionamento da API versão 1.0:
