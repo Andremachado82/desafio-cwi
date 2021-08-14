@@ -3,16 +3,21 @@
 ## Resumo
 A aplicação foi desenvolvida na linguagem Java, utilizado o framework Spring Boot na versão 2.3.3 e o Maven para controle de dependências. Junto ao Spring, foi utilizado o framework Hibernate, para realizar o mapeamento das classes Java e conversão em tabelas no banco de dados. A API REST desenvolvida possui endpoints com métodos dos tipos GET e POST para criação e busca de dados. 
 Utilizado também o Swagger para gerar a documentação da api.
+Utilizado o RabbitMQ como mensageria assícrona para envio do resultado da votação.
+
+## RabbitMQ
+Com o projeto rodando acesse o link: https://elk.rmq2.cloudamqp.com/#/queues e insira os dados abaixo para visualizar as mensagens na fila do RabbitMQ.
+1. Nome da fila: "resultadoVotacao"
+2. Usarname: vnkcstrq
+3. Senha: 4vu2APo5wJDTpRzqSYa-UmxMvYbVdX3S
 
 ## Banco de dados
 O banco de dados escolhido para integrar a aplicação foi o  H2, com as seguintes configurações.
 
 ## Executar projeto
-
 Link do repositório: https://github.com/Andremachado82/desafio-cwi
 
 ### Projeto configurado para a porta https://localhost:8083
-
 1. Rode no terminal git clone https://github.com/Andremachado82/desafio-cwi 
 2. Abra a basta desafio-cwi
 3. Abra o eclipse ou intelijj e import o projeto.
@@ -32,14 +37,12 @@ Link do repositório: https://github.com/Andremachado82/desafio-cwi
 - É importante que as pautas e os votos sejam persistidos e que não sejam perdidos com o restart da aplicação.
 
 ## Notas sobre dados persistidos
-
 - Para os dados inseridos na aplicação sejam persistidos no banco e não sejam perdidos ao restart da aplicação é necessário que no arquivo apllication.properties deve existir as seguinte configurações:
 
 - spring.jpa.hibernate.ddl-auto=update
 - spring.datasource.url=jdbc:h2:file:~/test
 
 ## Endpoints
-
 Seguem abaixo os seguintes endpoints criados para o funcionamento da API versão 1.0:
 #### GET
 
@@ -47,7 +50,7 @@ Listar pautas: `/v1/pautas`
 
 Buscar pauta específica: `/v1/pautas/{id}`
 
-Listar resultado da votação: `/v1/votacao/resultado/{idPauta}`
+Listar resultado da votação: `/v1/resultadoVotacao/{idPauta}`
 
 #### POST
 Cadastrar pauta: `/v1/pautas`
@@ -56,5 +59,6 @@ Cadastrar sessão: `/v1/sessao`
 
 Cadastrar voto: `/v1/votos`
 
+## Notas adicionais
 - Ao iniciar sessão de votação essa terá o tempo máximo de 1 minuto de duração como padrão e após esse tempo a sessão é expirada.
 - O resultado da votação de uma pauta retornará a quantidade total de votos Sim e Não.
